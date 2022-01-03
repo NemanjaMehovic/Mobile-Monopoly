@@ -1,28 +1,50 @@
 package com.example.pmuprojekat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
-import android.app.Fragment;
 import android.os.Bundle;
 
 import com.example.pmuprojekat.databinding.ActivityMainBinding;
+import com.example.pmuprojekat.fragments.gameFragment;
+import com.example.pmuprojekat.fragments.historyFragment;
+import com.example.pmuprojekat.fragments.optionsFragment;
 import com.example.pmuprojekat.fragments.startFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String FRAGMENT_TAG = "MAIN_FRAGMENT";
+    public static final int START_FRAGMENT = 0;
+    public static final int GAME_FRAGMENT = 1;
+    public static final int OPTIONS_FRAGMENT = 2;
+    public static final int HISTORY_FRAGMENT = 3;
+    public static final Fragment[] FRAGMENTS = {new startFragment(),
+            new gameFragment(),
+            new optionsFragment(),
+            new historyFragment()};
+
     private ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        startFragment fragment = new startFragment();
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.mainContentFrame, new startFragment(), FRAGMENT_TAG)
+                    .commit();
+        setContentView(binding.getRoot());
+    }
+
+    public void switchFragment(Fragment fragment)
+    {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.mainContentFrame, fragment,"MAIN_FRAGMENT")
-                .show(fragment)
+                .replace(R.id.mainContentFrame, fragment, FRAGMENT_TAG)
+                .addToBackStack(null)
                 .commit();
-        setContentView(binding.getRoot());
     }
 }

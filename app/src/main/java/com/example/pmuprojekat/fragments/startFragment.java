@@ -8,10 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
+import com.example.pmuprojekat.databinding.FragmentStartBinding;
 
 
 public class startFragment extends Fragment {
+
+    private FragmentStartBinding binding;
+    private MainActivity mainActivity;
 
     public startFragment() {
         // Required empty public constructor
@@ -20,12 +25,27 @@ public class startFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivity = (MainActivity) requireActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_start, container, false);
+        binding = FragmentStartBinding.inflate(inflater, container, false);
+
+        binding.newGameButton.setOnClickListener(v -> {
+            mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.GAME_FRAGMENT]);
+        });
+
+        binding.optionsButton.setOnClickListener(v -> {
+            mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.OPTIONS_FRAGMENT]);
+        });
+
+        binding.historyButton.setOnClickListener(v -> {
+            mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.HISTORY_FRAGMENT]);
+        });
+
+        return binding.getRoot();
     }
 }
