@@ -1,17 +1,35 @@
 package com.example.pmuprojekat.fragments;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.pmuprojekat.R;
+import com.example.pmuprojekat.databinding.FragmentGameBinding;
 
 
 public class gameFragment extends Fragment {
+
+    private enum MoveDir{
+        LEFT,
+        UP,
+        RIGHT,
+        DOWN
+    }
+
+    private FragmentGameBinding binding;
+    private static final double BIG_ZONE_WIDTH = 200;
+    private static final double SMALL_ZONE_WIDTH = 123;
+    private int stepCount = 0;
+    private MoveDir dir = MoveDir.LEFT;
+
 
     public gameFragment() {
         // Required empty public constructor
@@ -23,9 +41,90 @@ public class gameFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        binding = FragmentGameBinding.inflate(inflater, container, false);
+
+        RelativeLayout.LayoutParams tmp = (RelativeLayout.LayoutParams) binding.player1Layout.getLayoutParams();
+        binding.player1Layout.setLayoutParams(tmp);
+        binding.testButton.setOnClickListener(v -> {
+            int width = binding.board.getWidth();
+            int height = binding.board.getHeight();
+            int pictureWidth = binding.player1Picture.getWidth();
+            int pictureHeight = binding.player1Picture.getHeight();
+
+            BitmapDrawable b = (BitmapDrawable) this.getResources().getDrawable(R.drawable.monopoly_board);
+            double scaleW = (double) width / b.getBitmap().getWidth();
+            double scaleH = (double) height / b.getBitmap().getHeight();
+
+            RelativeLayout.LayoutParams marginParams = (RelativeLayout.LayoutParams) binding.player1Layout.getLayoutParams();
+            switch (dir)
+            {
+                case LEFT:
+                    if (stepCount == 0)
+                        marginParams.rightMargin += BIG_ZONE_WIDTH * scaleW;
+                    else
+                        marginParams.rightMargin += SMALL_ZONE_WIDTH * scaleW;
+                    if(stepCount%2 == 0)
+                        marginParams.rightMargin += 1;
+                    break;
+                case UP:
+                    if (stepCount == 0)
+                        marginParams.bottomMargin += BIG_ZONE_WIDTH * scaleH;
+                    else
+                        marginParams.bottomMargin += SMALL_ZONE_WIDTH * scaleH;
+                    if(stepCount%2 == 0)
+                        marginParams.bottomMargin += 1;
+                    break;
+                case RIGHT:
+                    if (stepCount == 0)
+                        marginParams.rightMargin -= BIG_ZONE_WIDTH * scaleW;
+                    else
+                        marginParams.rightMargin -= SMALL_ZONE_WIDTH * scaleW;
+                    if(stepCount%2 == 0)
+                        marginParams.rightMargin += 1;
+                    break;
+                case DOWN:
+                    if (stepCount == 0)
+                        marginParams.bottomMargin -= BIG_ZONE_WIDTH * scaleH;
+                    else
+                        marginParams.bottomMargin -= SMALL_ZONE_WIDTH * scaleH;
+                    if(stepCount%2 == 0)
+                        marginParams.bottomMargin += 1;
+                    break;
+            }
+
+            stepCount++;
+            if(stepCount >= 10)
+            {
+                stepCount = 0;
+                switch (dir)
+                {
+                    case LEFT:
+                        dir = MoveDir.UP;
+                        marginParams.bottomMargin = 0;
+                        marginParams.rightMargin = width - pictureWidth;
+                        break;
+                    case UP:
+                        dir = MoveDir.RIGHT;
+                        marginParams.bottomMargin = height - pictureHeight;
+                        marginParams.rightMargin = width - pictureWidth;
+                        break;
+                    case RIGHT:
+                        dir = MoveDir.DOWN;
+                        marginParams.bottomMargin = height - pictureHeight;
+                        marginParams.rightMargin = 0;
+                        break;
+                    case DOWN:
+                        dir = MoveDir.LEFT;
+                        marginParams.bottomMargin = 0;
+                        marginParams.rightMargin = 0;
+                        break;
+                }
+            }
+            binding.player1Layout.setLayoutParams(marginParams);
+        });
+
+        return binding.getRoot();
     }
 }

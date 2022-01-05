@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cardName">
+        <item>Go</item>
+        <item>Mediterranean Avenue</item>
+        <item>Chest</item>
+        <item>Baltic Avenue</item>
+        <item>Income Tax</item>
+        <item>Reading Railroad</item>
+        <item>Oriental Avenue</item>
+        <item>Chance</item>
+        <item>Vermont Avenue</item>
+        <item>Connecticut Avenue</item>
+
+        <item>Jail</item>
+        <item>St. Charles Place</item>
+        <item>Electric Company</item>
+        <item>States Avenue</item>
+        <item>Virginia Avenue</item>
+        <item>Pennsylvania Railroad</item>
+        <item>St. James Place</item>
+        <item>Chest</item>
+        <item>Tennessee Avenue</item>
+        <item>New York Avenue</item>
+
+        <item>Free Parking</item>
+        <item>Kentucky Avenue</item>
+        <item>Chance</item>
+        <item>Indiana Avenue</item>
+        <item>Illinois Avenue</item>
+        <item>B and O Railroad</item>
+        <item>Atlantic Avenue</item>
+        <item>Ventnor Avenue</item>
+        <item>Water Works</item>
+        <item>Marvin Gardens</item>
+
+        <item>Go To Jail</item>
+        <item>Pacific Avenue</item>
+        <item>North Carolina Avenue</item>
+        <item>Chest</item>
+        <item>Pennsylvania Avenue</item>
+        <item>Short Line</item>
+        <item>Chance</item>
+        <item>Park Place</item>
+        <item>Luxury Tax</item>
+        <item>Boardwalk</item>
+    </string-array>
+    <integer-array name="cardCost">
+        <item>200</item>
+        <item>60</item>
+        <item>0</item>
+        <item>60</item>
+        <item>200</item>
+        <item>200</item>
+        <item>100</item>
+        <item>0</item>
+        <item>100</item>
+        <item>120</item>
+
+        <item>50</item>
+        <item>140</item>
+        <item>150</item>
+        <item>140</item>
+        <item>160</item>
+        <item>200</item>
+        <item>180</item>
+        <item>0</item>
+        <item>180</item>
+        <item>200</item>
+
+        <item>0</item>
+        <item>220</item>
+        <item>0</item>
+        <item>220</item>
+        <item>240</item>
+        <item>200</item>
+        <item>260</item>
+        <item>260</item>
+        <item>150</item>
+        <item>280</item>
+
+        <item>0</item>
+        <item>300</item>
+        <item>300</item>
+        <item>0</item>
+        <item>320</item>
+        <item>200</item>
+        <item>0</item>
+        <item>350</item>
+        <item>100</item>
+        <item>400</item>
+    </integer-array>
+    <string-array name="cardType">
+        <item>Go</item>
+        <item>Buy-House-Brown</item>
+        <item>Chest</item>
+        <item>Buy-House-Brown</item>
+        <item>Tax</item>
+        <item>Buy-Railroad</item>
+        <item>Buy-House-LightBlue</item>
+        <item>Chance</item>
+        <item>Buy-House-LightBlue</item>
+        <item>Buy-House-LightBlue</item>
+
+        <item>Jail</item>
+        <item>Buy-House-Purple</item>
+        <item>Buy-Utility</item>
+        <item>Buy-House-Purple</item>
+        <item>Buy-House-Purple</item>
+        <item>Buy-Railroad</item>
+        <item>Buy-House-Orange</item>
+        <item>Chest</item>
+        <item>Buy-House-Orange</item>
+        <item>Buy-House-Orange</item>
+
+        <item>Parking</item>
+        <item>Buy-House-Red</item>
+        <item>Chance</item>
+        <item>Buy-House-Red</item>
+        <item>Buy-House-Red</item>
+        <item>Buy-Railroad</item>
+        <item>Buy-House-Yellow</item>
+        <item>Buy-House-Yellow</item>
+        <item>Buy-Utility</item>
+        <item>Buy-House-Yellow</item>
+
+        <item>GoJail</item>
+        <item>Buy-House-Green</item>
+        <item>Buy-House-Green</item>
+        <item>Chest</item>
+        <item>Buy-House-Green</item>
+        <item>Buy-Railroad</item>
+        <item>Chance</item>
+        <item>Buy-House-Blue</item>
+        <item>Tax</item>
+        <item>Buy-House-Blue</item>
+    </string-array>
+    <string-array name="cardHousePrices">
+        <item>Brown-50</item>
+        <item>LightBlue-50</item>
+
+        <item>Purple-100</item>
+        <item>Orange-100</item>
+
+        <item>Red-150</item>
+        <item>Yellow-150</item>
+
+        <item>Green-200</item>
+        <item>Blue-200</item>
+    </string-array>
+    <string-array name="cardRent">
+        <item>Brown-Cheap-0-2</item>
+        <item>Brown-Cheap-1-10</item>
+        <item>Brown-Cheap-2-30</item>
+        <item>Brown-Cheap-3-90</item>
+        <item>Brown-Cheap-4-160</item>
+        <item>Brown-Cheap-5-250</item>
+
+        <item>Brown-Expansive-0-4</item>
+        <item>Brown-Expansive-1-20</item>
+        <item>Brown-Expansive-2-60</item>
+        <item>Brown-Expansive-3-180</item>
+        <item>Brown-Expansive-4-320</item>
+        <item>Brown-Expansive-5-450</item>
+
+        <item>LightBlue-Cheap-0-6</item>
+        <item>LightBlue-Cheap-1-30</item>
+        <item>LightBlue-Cheap-2-90</item>
+        <item>LightBlue-Cheap-3-270</item>
+        <item>LightBlue-Cheap-4-400</item>
+        <item>LightBlue-Cheap-5-550</item>
+
+        <item>LightBlue-Expansive-0-8</item>
+        <item>LightBlue-Expansive-1-40</item>
+        <item>LightBlue-Expansive-2-100</item>
+        <item>LightBlue-Expansive-3-300</item>
+        <item>LightBlue-Expansive-4-450</item>
+        <item>LightBlue-Expansive-5-600</item>
+
+        <item>Purple-Cheap-0-10</item>
+        <item>Purple-Cheap-1-50</item>
+        <item>Purple-Cheap-2-150</item>
+        <item>Purple-Cheap-3-450</item>
+        <item>Purple-Cheap-4-625</item>
+        <item>Purple-Cheap-5-750</item>
+
+        <item>Purple-Expansive-0-12</item>
+        <item>Purple-Expansive-1-60</item>
+        <item>Purple-Expansive-2-180</item>
+        <item>Purple-Expansive-3-500</item>
+        <item>Purple-Expansive-4-700</item>
+        <item>Purple-Expansive-5-900</item>
+
+        <item>Orange-Cheap-0-14</item>
+        <item>Orange-Cheap-1-70</item>
+        <item>Orange-Cheap-2-200</item>
+        <item>Orange-Cheap-3-550</item>
+        <item>Orange-Cheap-4-750</item>
+        <item>Orange-Cheap-5-950</item>
+
+        <item>Orange-Expansive-0-16</item>
+        <item>Orange-Expansive-1-80</item>
+        <item>Orange-Expansive-2-220</item>
+        <item>Orange-Expansive-3-600</item>
+        <item>Orange-Expansive-4-800</item>
+        <item>Orange-Expansive-5-1000</item>
+
+        <item>Red-Cheap-0-18</item>
+        <item>Red-Cheap-1-90</item>
+        <item>Red-Cheap-2-250</item>
+        <item>Red-Cheap-3-700</item>
+        <item>Red-Cheap-4-875</item>
+        <item>Red-Cheap-5-1050</item>
+
+        <item>Red-Expansive-0-20</item>
+        <item>Red-Expansive-1-100</item>
+        <item>Red-Expansive-2-300</item>
+        <item>Red-Expansive-3-750</item>
+        <item>Red-Expansive-4-925</item>
+        <item>Red-Expansive-5-1100</item>
+
+        <item>Yellow-Cheap-0-22</item>
+        <item>Yellow-Cheap-1-110</item>
+        <item>Yellow-Cheap-2-330</item>
+        <item>Yellow-Cheap-3-800</item>
+        <item>Yellow-Cheap-4-975</item>
+        <item>Yellow-Cheap-5-1150</item>
+
+        <item>Yellow-Expansive-0-24</item>
+        <item>Yellow-Expansive-1-120</item>
+        <item>Yellow-Expansive-2-360</item>
+        <item>Yellow-Expansive-3-850</item>
+        <item>Yellow-Expansive-4-1025</item>
+        <item>Yellow-Expansive-5-1200</item>
+
+        <item>Green-Cheap-0-26</item>
+        <item>Green-Cheap-1-130</item>
+        <item>Green-Cheap-2-390</item>
+        <item>Green-Cheap-3-900</item>
+        <item>Green-Cheap-4-1100</item>
+        <item>Green-Cheap-5-1275</item>
+
+        <item>Green-Expansive-0-28</item>
+        <item>Green-Expansive-1-150</item>
+        <item>Green-Expansive-2-450</item>
+        <item>Green-Expansive-3-1000</item>
+        <item>Green-Expansive-4-1200</item>
+        <item>Green-Expansive-5-1400</item>
+
+        <item>Blue-Cheap-0-35</item>
+        <item>Blue-Cheap-1-175</item>
+        <item>Blue-Cheap-2-500</item>
+        <item>Blue-Cheap-3-1100</item>
+        <item>Blue-Cheap-4-1300</item>
+        <item>Blue-Cheap-5-1500</item>
+
+        <item>Blue-Expansive-0-50</item>
+        <item>Blue-Expansive-1-200</item>
+        <item>Blue-Expansive-2-600</item>
+        <item>Blue-Expansive-3-1400</item>
+        <item>Blue-Expansive-4-1700</item>
+        <item>Blue-Expansive-5-2000</item>
+
+        <item>Utility-1-4</item>
+        <item>Utility-2-10</item>
+
+        <item>Railroad-25</item>
+    </string-array>
+</resources>
