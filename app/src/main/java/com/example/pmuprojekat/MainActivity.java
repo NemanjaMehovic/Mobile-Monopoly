@@ -11,6 +11,7 @@ import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.fragments.historyFragment;
 import com.example.pmuprojekat.fragments.optionsFragment;
 import com.example.pmuprojekat.fragments.startFragment;
+import com.example.pmuprojekat.monopoly.Game;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .add(R.id.mainContentFrame, new startFragment(), FRAGMENT_TAG)
                     .commit();
+
+        String[] cardNames = getResources().getStringArray(R.array.cardName);
+        int[] cardCosts = getResources().getIntArray(R.array.cardCost);
+        String[] cardTypes = getResources().getStringArray(R.array.cardType);
+        String[] cardHousePrices = getResources().getStringArray(R.array.cardHousePrices);
+        String[] cardRents = getResources().getStringArray(R.array.cardRent);
+        Game.getInstance().initiateGame(cardNames, cardCosts, cardTypes, cardHousePrices, cardRents);
+
         setContentView(binding.getRoot());
     }
 

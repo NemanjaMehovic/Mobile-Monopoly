@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.gameFragment"
-    android:orientation="vertical">
+    tools:context=".fragments.gameFragment">
 
 
     <Button
@@ -12,31 +11,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test move"
+        android:layout_centerInParent="true"
         />
-
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/monopoly_board"/>
+    <RelativeLayout
+        android:id="@+id/player1Layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        >
         <ImageView
-            android:id="@+id/board"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:src="@drawable/monopoly_board"/>
-        <RelativeLayout
-            android:id="@+id/player1Layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            >
-            <ImageView
-                android:id="@+id/player1Picture"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/ic_launcher_background" />
-        </RelativeLayout>
+            android:id="@+id/player1Picture"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_launcher_background" />
     </RelativeLayout>
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        >
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_launcher_background" />
+    </RelativeLayout>
+
+</RelativeLayout>

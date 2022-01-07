@@ -265,5 +265,8 @@
         <item>Utility-2-10</item>
 
         <item>Railroad-25</item>
+        <item>Railroad-50</item>
+        <item>Railroad-100</item>
+        <item>Railroad-200</item>
     </string-array>
 </resources>
