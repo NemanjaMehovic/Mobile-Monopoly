@@ -2,6 +2,9 @@ package com.example.pmuprojekat.monopoly.Fields;
 
 import androidx.annotation.NonNull;
 
+import com.example.pmuprojekat.monopoly.Game;
+import com.example.pmuprojekat.monopoly.Player;
+
 import java.util.List;
 
 public abstract class BuyableField extends Field {
@@ -11,12 +14,14 @@ public abstract class BuyableField extends Field {
     private int housesOwned;
     private int houseHotelPrice;
     private List<Integer> rentPrices;
+    private Player owner;
 
     public BuyableField(String name, int price) {
         super(name);
         this.price = price;
         this.mortgage = false;
         this.housesOwned = 0;
+        this.owner = null;
     }
 
     public int getPrice() {
@@ -59,9 +64,36 @@ public abstract class BuyableField extends Field {
         this.rentPrices = rentPrices;
     }
 
+    public boolean canHaveHouse() {
+        return false;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public abstract int getAmount(Player p);
+
+    @Override
+    public void effect(Player p) {
+        if (!p.getOwned().contains(this)) {
+            if (owner != null) {
+                int amount = getAmount(p);
+                owner.addMoney(amount);
+                if (!p.removeMoney(amount))
+                    Game.getInstance().notEnoughMoney(p);
+            } else
+                Game.getInstance().offerToBuy(p, this);
+        }
+    }
+
     @NonNull
     @Override
     public String toString() {
-        return super.toString() + " " + price;// + " " + rentPrices.toString();
+        return super.toString() + " " + price + " " + rentPrices.toString();
     }
 }

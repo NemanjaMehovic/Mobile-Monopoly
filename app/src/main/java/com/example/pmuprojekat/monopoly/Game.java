@@ -10,16 +10,23 @@ import com.example.pmuprojekat.monopoly.Fields.ToJailField;
 import com.example.pmuprojekat.monopoly.Fields.UtilityBuyableField;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Game {
 
+    private static final int NumOfHouses = 32;
+    private static final int NumOfHotels = 12;
     private static Game instance;
     private List<Field> fields;
+    private List<PropertyBuyableField> propertyBuyableFields;
+    private List<RailroadBuyableField> railroadBuyableFields;
+    private List<UtilityBuyableField> utilityBuyableFields;
+    private List<Player> players;
+    private ToJailField toJailField;
 
-    public static Game getInstance()
-    {
-        if(instance == null)
+    public static Game getInstance() {
+        if (instance == null)
             instance = new Game();
         return instance;
     }
@@ -27,17 +34,35 @@ public class Game {
     private Game() {
     }
 
-    public void initiateGame(String[] cardNames, int[] cardCosts, String[] cardTypes, String[] cardHousePrices, String[] cardRents)
-    {
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public List<PropertyBuyableField> getPropertyBuyableFields() {
+        return propertyBuyableFields;
+    }
+
+    public List<RailroadBuyableField> getRailroadBuyableFields() {
+        return railroadBuyableFields;
+    }
+
+    public List<UtilityBuyableField> getUtilityBuyableFields() {
+        return utilityBuyableFields;
+    }
+
+    public ToJailField getToJailField() {
+        return toJailField;
+    }
+
+    public void initiateGame(String[] cardNames, int[] cardCosts, String[] cardTypes, String[] cardHousePrices, String[] cardRents) {
         Field.reset();
         fields = new ArrayList<>();
-        List<BuyableField> buyableFields = new ArrayList<>();
-        List<PropertyBuyableField> propertyBuyableFields = new ArrayList<>();
-        for(int i = 0; i < cardNames.length; i++)
-        {
+        propertyBuyableFields = new ArrayList<>();
+        railroadBuyableFields = new ArrayList<>();
+        utilityBuyableFields = new ArrayList<>();
+        for (int i = 0; i < cardNames.length; i++) {
             String[] splitType = cardTypes[i].split("-");
-            switch (splitType[0])
-            {
+            switch (splitType[0]) {
                 case "Go":
                 case "Jail":
                 case "Parking":
@@ -50,30 +75,31 @@ public class Game {
                     fields.add(new ChanceChestField(cardNames[i], ChanceChestField.ChanceChestType.CHANCE));
                     break;
                 case "GoJail":
-                    fields.add(new ToJailField(cardNames[i]));
+                    toJailField = new ToJailField(cardNames[i]);
+                    fields.add(toJailField);
                     break;
                 case "Tax":
                     fields.add(new TaxField(cardNames[i], cardCosts[i]));
                     break;
                 case "Buy":
                     BuyableField tmp = null;
-                    switch (splitType[1])
-                    {
+                    switch (splitType[1]) {
                         case "House":
                             tmp = new PropertyBuyableField(cardNames[i], cardCosts[i], splitType[2]);
                             propertyBuyableFields.add((PropertyBuyableField) tmp);
                             break;
                         case "Railroad":
                             tmp = new RailroadBuyableField(cardNames[i], cardCosts[i]);
+                            railroadBuyableFields.add((RailroadBuyableField) tmp);
                             break;
                         case "Utility":
                             tmp = new UtilityBuyableField(cardNames[i], cardCosts[i]);
+                            utilityBuyableFields.add((UtilityBuyableField) tmp);
                             break;
                         default:
                             System.out.println("Error unknown type of buyable.");
                             break;
                     }
-                    buyableFields.add(tmp);
                     fields.add(tmp);
                     break;
                 default:
@@ -81,8 +107,71 @@ public class Game {
                     break;
             }
         }
-        for(Field f : fields)
+
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String housePrice : cardHousePrices) {
+            String[] split = housePrice.split("-");
+            map.put(split[0], Integer.parseInt(split[1]));
+        }
+        for (PropertyBuyableField property : propertyBuyableFields)
+            property.setHouseHotelPrice(map.get(property.getColor()));
+
+        HashMap<String, HashMap<String, List<Integer>>> rentPricesForCollors = new HashMap<>();
+        List<Integer> utilRentPrices = new ArrayList<>();
+        List<Integer> railroadRentPrices = new ArrayList<>();
+        for (String rentPrices : cardRents) {
+            String[] split = rentPrices.split("-");
+            switch (split[0]) {
+                case "Railroad":
+                    railroadRentPrices.add(Integer.parseInt(split[1]));
+                    break;
+                case "Utility":
+                    utilRentPrices.add(Integer.parseInt(split[1]));
+                    break;
+                default:
+                    HashMap<String, List<Integer>> tmp = null;
+                    List<Integer> tmpList = null;
+                    if (rentPricesForCollors.containsKey(split[0]))
+                        tmp = rentPricesForCollors.get(split[0]);
+                    else {
+                        tmp = new HashMap<>();
+                        rentPricesForCollors.put(split[0], tmp);
+                    }
+                    if (tmp.containsKey(split[1]))
+                        tmpList = tmp.get(split[1]);
+                    else {
+                        tmpList = new ArrayList<>();
+                        tmp.put(split[1], tmpList);
+                    }
+                    tmpList.add(Integer.parseInt(split[2]));
+                    break;
+            }
+        }
+        for (RailroadBuyableField railroad : railroadBuyableFields)
+            railroad.setRentPrices(railroadRentPrices);
+        for (UtilityBuyableField util : utilityBuyableFields)
+            util.setRentPrices(utilRentPrices);
+        for (int i = 0; i < propertyBuyableFields.size() - 1; i++) {
+            PropertyBuyableField property = propertyBuyableFields.get(i);
+            PropertyBuyableField propertyNext = propertyBuyableFields.get(i + 1);
+            HashMap<String, List<Integer>> tmp = rentPricesForCollors.get(property.getColor());
+            property.setRentPrices(
+                    property.getColor().equals(propertyNext.getColor()) ? tmp.get("Cheap") : tmp.get("Expansive")
+            );
+        }
+        PropertyBuyableField property = propertyBuyableFields.get(propertyBuyableFields.size() - 1);
+        property.setRentPrices(rentPricesForCollors.get(property.getColor()).get("Expansive"));
+        for(Field f:fields)
             System.out.println(f);
-        //TODO add house prices and rent prices
+    }
+
+    public void notEnoughMoney(Player p)
+    {
+        //TODO implement
+    }
+
+    public void offerToBuy(Player p, BuyableField field)
+    {
+        //TODO implement
     }
 }

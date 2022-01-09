@@ -149,120 +149,120 @@
         <item>Blue-200</item>
     </string-array>
     <string-array name="cardRent">
-        <item>Brown-Cheap-0-2</item>
-        <item>Brown-Cheap-1-10</item>
-        <item>Brown-Cheap-2-30</item>
-        <item>Brown-Cheap-3-90</item>
-        <item>Brown-Cheap-4-160</item>
-        <item>Brown-Cheap-5-250</item>
+        <item>Brown-Cheap-2</item>
+        <item>Brown-Cheap-10</item>
+        <item>Brown-Cheap-30</item>
+        <item>Brown-Cheap-90</item>
+        <item>Brown-Cheap-160</item>
+        <item>Brown-Cheap-250</item>
 
-        <item>Brown-Expansive-0-4</item>
-        <item>Brown-Expansive-1-20</item>
-        <item>Brown-Expansive-2-60</item>
-        <item>Brown-Expansive-3-180</item>
-        <item>Brown-Expansive-4-320</item>
-        <item>Brown-Expansive-5-450</item>
+        <item>Brown-Expansive-4</item>
+        <item>Brown-Expansive-20</item>
+        <item>Brown-Expansive-60</item>
+        <item>Brown-Expansive-180</item>
+        <item>Brown-Expansive-320</item>
+        <item>Brown-Expansive-450</item>
 
-        <item>LightBlue-Cheap-0-6</item>
-        <item>LightBlue-Cheap-1-30</item>
-        <item>LightBlue-Cheap-2-90</item>
-        <item>LightBlue-Cheap-3-270</item>
-        <item>LightBlue-Cheap-4-400</item>
-        <item>LightBlue-Cheap-5-550</item>
+        <item>LightBlue-Cheap-6</item>
+        <item>LightBlue-Cheap-30</item>
+        <item>LightBlue-Cheap-90</item>
+        <item>LightBlue-Cheap-270</item>
+        <item>LightBlue-Cheap-400</item>
+        <item>LightBlue-Cheap-550</item>
 
-        <item>LightBlue-Expansive-0-8</item>
-        <item>LightBlue-Expansive-1-40</item>
-        <item>LightBlue-Expansive-2-100</item>
-        <item>LightBlue-Expansive-3-300</item>
-        <item>LightBlue-Expansive-4-450</item>
-        <item>LightBlue-Expansive-5-600</item>
+        <item>LightBlue-Expansive-8</item>
+        <item>LightBlue-Expansive-40</item>
+        <item>LightBlue-Expansive-100</item>
+        <item>LightBlue-Expansive-300</item>
+        <item>LightBlue-Expansive-450</item>
+        <item>LightBlue-Expansive-600</item>
 
-        <item>Purple-Cheap-0-10</item>
-        <item>Purple-Cheap-1-50</item>
-        <item>Purple-Cheap-2-150</item>
-        <item>Purple-Cheap-3-450</item>
-        <item>Purple-Cheap-4-625</item>
-        <item>Purple-Cheap-5-750</item>
+        <item>Purple-Cheap-10</item>
+        <item>Purple-Cheap-50</item>
+        <item>Purple-Cheap-150</item>
+        <item>Purple-Cheap-450</item>
+        <item>Purple-Cheap-625</item>
+        <item>Purple-Cheap-750</item>
 
-        <item>Purple-Expansive-0-12</item>
-        <item>Purple-Expansive-1-60</item>
-        <item>Purple-Expansive-2-180</item>
-        <item>Purple-Expansive-3-500</item>
-        <item>Purple-Expansive-4-700</item>
-        <item>Purple-Expansive-5-900</item>
+        <item>Purple-Expansive-12</item>
+        <item>Purple-Expansive-60</item>
+        <item>Purple-Expansive-180</item>
+        <item>Purple-Expansive-500</item>
+        <item>Purple-Expansive-700</item>
+        <item>Purple-Expansive-900</item>
 
-        <item>Orange-Cheap-0-14</item>
-        <item>Orange-Cheap-1-70</item>
-        <item>Orange-Cheap-2-200</item>
-        <item>Orange-Cheap-3-550</item>
-        <item>Orange-Cheap-4-750</item>
-        <item>Orange-Cheap-5-950</item>
+        <item>Orange-Cheap-14</item>
+        <item>Orange-Cheap-70</item>
+        <item>Orange-Cheap-200</item>
+        <item>Orange-Cheap-550</item>
+        <item>Orange-Cheap-750</item>
+        <item>Orange-Cheap-950</item>
 
-        <item>Orange-Expansive-0-16</item>
-        <item>Orange-Expansive-1-80</item>
-        <item>Orange-Expansive-2-220</item>
-        <item>Orange-Expansive-3-600</item>
-        <item>Orange-Expansive-4-800</item>
-        <item>Orange-Expansive-5-1000</item>
+        <item>Orange-Expansive-16</item>
+        <item>Orange-Expansive-80</item>
+        <item>Orange-Expansive-220</item>
+        <item>Orange-Expansive-600</item>
+        <item>Orange-Expansive-800</item>
+        <item>Orange-Expansive-1000</item>
 
-        <item>Red-Cheap-0-18</item>
-        <item>Red-Cheap-1-90</item>
-        <item>Red-Cheap-2-250</item>
-        <item>Red-Cheap-3-700</item>
-        <item>Red-Cheap-4-875</item>
-        <item>Red-Cheap-5-1050</item>
+        <item>Red-Cheap-18</item>
+        <item>Red-Cheap-90</item>
+        <item>Red-Cheap-250</item>
+        <item>Red-Cheap-700</item>
+        <item>Red-Cheap-875</item>
+        <item>Red-Cheap-1050</item>
 
-        <item>Red-Expansive-0-20</item>
-        <item>Red-Expansive-1-100</item>
-        <item>Red-Expansive-2-300</item>
-        <item>Red-Expansive-3-750</item>
-        <item>Red-Expansive-4-925</item>
-        <item>Red-Expansive-5-1100</item>
+        <item>Red-Expansive-20</item>
+        <item>Red-Expansive-100</item>
+        <item>Red-Expansive-300</item>
+        <item>Red-Expansive-750</item>
+        <item>Red-Expansive-925</item>
+        <item>Red-Expansive-1100</item>
 
-        <item>Yellow-Cheap-0-22</item>
-        <item>Yellow-Cheap-1-110</item>
-        <item>Yellow-Cheap-2-330</item>
-        <item>Yellow-Cheap-3-800</item>
-        <item>Yellow-Cheap-4-975</item>
-        <item>Yellow-Cheap-5-1150</item>
+        <item>Yellow-Cheap-22</item>
+        <item>Yellow-Cheap-110</item>
+        <item>Yellow-Cheap-330</item>
+        <item>Yellow-Cheap-800</item>
+        <item>Yellow-Cheap-975</item>
+        <item>Yellow-Cheap-1150</item>
 
-        <item>Yellow-Expansive-0-24</item>
-        <item>Yellow-Expansive-1-120</item>
-        <item>Yellow-Expansive-2-360</item>
-        <item>Yellow-Expansive-3-850</item>
-        <item>Yellow-Expansive-4-1025</item>
-        <item>Yellow-Expansive-5-1200</item>
+        <item>Yellow-Expansive-24</item>
+        <item>Yellow-Expansive-120</item>
+        <item>Yellow-Expansive-360</item>
+        <item>Yellow-Expansive-850</item>
+        <item>Yellow-Expansive-1025</item>
+        <item>Yellow-Expansive-1200</item>
 
-        <item>Green-Cheap-0-26</item>
-        <item>Green-Cheap-1-130</item>
-        <item>Green-Cheap-2-390</item>
-        <item>Green-Cheap-3-900</item>
-        <item>Green-Cheap-4-1100</item>
-        <item>Green-Cheap-5-1275</item>
+        <item>Green-Cheap-26</item>
+        <item>Green-Cheap-130</item>
+        <item>Green-Cheap-390</item>
+        <item>Green-Cheap-900</item>
+        <item>Green-Cheap-1100</item>
+        <item>Green-Cheap-1275</item>
 
-        <item>Green-Expansive-0-28</item>
-        <item>Green-Expansive-1-150</item>
-        <item>Green-Expansive-2-450</item>
-        <item>Green-Expansive-3-1000</item>
-        <item>Green-Expansive-4-1200</item>
-        <item>Green-Expansive-5-1400</item>
+        <item>Green-Expansive-28</item>
+        <item>Green-Expansive-150</item>
+        <item>Green-Expansive-450</item>
+        <item>Green-Expansive-1000</item>
+        <item>Green-Expansive-1200</item>
+        <item>Green-Expansive-1400</item>
 
-        <item>Blue-Cheap-0-35</item>
-        <item>Blue-Cheap-1-175</item>
-        <item>Blue-Cheap-2-500</item>
-        <item>Blue-Cheap-3-1100</item>
-        <item>Blue-Cheap-4-1300</item>
-        <item>Blue-Cheap-5-1500</item>
+        <item>Blue-Cheap-35</item>
+        <item>Blue-Cheap-175</item>
+        <item>Blue-Cheap-500</item>
+        <item>Blue-Cheap-1100</item>
+        <item>Blue-Cheap-1300</item>
+        <item>Blue-Cheap-1500</item>
 
-        <item>Blue-Expansive-0-50</item>
-        <item>Blue-Expansive-1-200</item>
-        <item>Blue-Expansive-2-600</item>
-        <item>Blue-Expansive-3-1400</item>
-        <item>Blue-Expansive-4-1700</item>
-        <item>Blue-Expansive-5-2000</item>
+        <item>Blue-Expansive-50</item>
+        <item>Blue-Expansive-200</item>
+        <item>Blue-Expansive-600</item>
+        <item>Blue-Expansive-1400</item>
+        <item>Blue-Expansive-1700</item>
+        <item>Blue-Expansive-2000</item>
 
-        <item>Utility-1-4</item>
-        <item>Utility-2-10</item>
+        <item>Utility-4</item>
+        <item>Utility-10</item>
 
         <item>Railroad-25</item>
         <item>Railroad-50</item>
