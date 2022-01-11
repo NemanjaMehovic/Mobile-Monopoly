@@ -17,7 +17,7 @@ public class TaxField extends Field {
     @Override
     public void effect(Player p) {
         if (!p.removeMoney(taxNum))
-            Game.getInstance().notEnoughMoney(p);
+            Game.getInstance().notEnoughMoney(p, taxNum);
     }
 
     @NonNull

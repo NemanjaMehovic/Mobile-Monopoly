@@ -11,6 +11,7 @@ import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.fragments.historyFragment;
 import com.example.pmuprojekat.fragments.optionsFragment;
 import com.example.pmuprojekat.fragments.startFragment;
+import com.example.pmuprojekat.monopoly.Fields.ChanceChestField;
 import com.example.pmuprojekat.monopoly.Game;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         String[] cardHousePrices = getResources().getStringArray(R.array.cardHousePrices);
         String[] cardRents = getResources().getStringArray(R.array.cardRent);
         Game.getInstance().initiateGame(cardNames, cardCosts, cardTypes, cardHousePrices, cardRents);
+
+        String[] chanceCards = getResources().getStringArray(R.array.chanceCards);
+        String[] chestCards = getResources().getStringArray(R.array.chestCards);
+
+        ChanceChestField.initChanceChest(chanceCards, chestCards);
 
         setContentView(binding.getRoot());
     }

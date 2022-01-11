@@ -1,6 +1,7 @@
 package com.example.pmuprojekat.monopoly;
 
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
+import com.example.pmuprojekat.monopoly.Fields.PropertyBuyableField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ public class Player {
     private int position;
     private int jailTime;
     private int numRolled;
+    private String chanceJailFree;
+    private String chestJailFree;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -22,6 +25,8 @@ public class Player {
         this.jailTime = 0;
         this.numRolled = 1;
         this.owned = new ArrayList<>();
+        this.chanceJailFree = "";
+        this.chestJailFree = "";
     }
 
     public List<BuyableField> getOwned() {
@@ -32,14 +37,12 @@ public class Player {
         this.owned = owned;
     }
 
-    public boolean removeOwned(BuyableField field)
-    {
+    public boolean removeOwned(BuyableField field) {
         return owned.remove(field);
     }
 
-    public boolean addOwned(BuyableField field)
-    {
-        if(owned.contains(field))
+    public boolean addOwned(BuyableField field) {
+        if (owned.contains(field))
             return false;
         owned.add(field);
         return true;
@@ -53,15 +56,13 @@ public class Player {
         this.currMoney = currMoney;
     }
 
-    public int addMoney(int amount)
-    {
+    public int addMoney(int amount) {
         currMoney += amount;
         return currMoney;
     }
 
-    public boolean removeMoney(int amount)
-    {
-        if((currMoney - amount) <= 0)
+    public boolean removeMoney(int amount) {
+        if ((currMoney - amount) <= 0)
             return false;
         addMoney(-amount);
         return true;
@@ -88,9 +89,8 @@ public class Player {
         this.jailTime = jailTime;
     }
 
-    public int updateJailTime()
-    {
-        if(jailTime > 0)
+    public int updateJailTime() {
+        if (jailTime > 0)
             jailTime--;
         return jailTime;
     }
@@ -101,5 +101,39 @@ public class Player {
 
     public void setNumRolled(int numRolled) {
         this.numRolled = numRolled;
+    }
+
+    public String getChanceJailFree() {
+        return chanceJailFree;
+    }
+
+    public void setChanceJailFree(String chanceJailFree) {
+        this.chanceJailFree = chanceJailFree;
+    }
+
+    public String getChestJailFree() {
+        return chestJailFree;
+    }
+
+    public void setChestJailFree(String chestJailFree) {
+        this.chestJailFree = chestJailFree;
+    }
+
+    public int getNumOfHouses() {
+        int num = 0;
+        for (BuyableField field : owned) {
+            int tmp = field.getHousesOwned();
+            num += tmp < 5 ? tmp : 0;
+        }
+        return num;
+    }
+
+    public int getNumOfHotels() {
+        int num = 0;
+        for (BuyableField field : owned) {
+            int tmp = field.getHousesOwned();
+            num += tmp > 4 ? 1 : 0;
+        }
+        return num;
     }
 }

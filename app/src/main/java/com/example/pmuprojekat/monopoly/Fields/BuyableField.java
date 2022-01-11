@@ -85,7 +85,7 @@ public abstract class BuyableField extends Field {
                 int amount = getAmount(p);
                 owner.addMoney(amount);
                 if (!p.removeMoney(amount))
-                    Game.getInstance().notEnoughMoney(p);
+                    Game.getInstance().notEnoughMoney(p, amount);
             } else
                 Game.getInstance().offerToBuy(p, this);
         }

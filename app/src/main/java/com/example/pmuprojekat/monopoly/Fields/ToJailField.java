@@ -14,6 +14,13 @@ public class ToJailField extends Field {
     @Override
     public void effect(Player p) {
         p.setJailTime(3);
-        p.setPosition(Game.getInstance().getToJailField().getId());
+        int position = getId();
+        for(Field f: Game.getInstance().getFields())
+            if(f.getName().equals("Jail"))
+            {
+                position = f.getId();
+                break;
+            }
+        p.setPosition(position);
     }
 }

@@ -23,7 +23,6 @@ public class Game {
     private List<RailroadBuyableField> railroadBuyableFields;
     private List<UtilityBuyableField> utilityBuyableFields;
     private List<Player> players;
-    private ToJailField toJailField;
 
     public static Game getInstance() {
         if (instance == null)
@@ -50,10 +49,6 @@ public class Game {
         return utilityBuyableFields;
     }
 
-    public ToJailField getToJailField() {
-        return toJailField;
-    }
-
     public void initiateGame(String[] cardNames, int[] cardCosts, String[] cardTypes, String[] cardHousePrices, String[] cardRents) {
         Field.reset();
         fields = new ArrayList<>();
@@ -75,8 +70,7 @@ public class Game {
                     fields.add(new ChanceChestField(cardNames[i], ChanceChestField.ChanceChestType.CHANCE));
                     break;
                 case "GoJail":
-                    toJailField = new ToJailField(cardNames[i]);
-                    fields.add(toJailField);
+                    fields.add(new ToJailField(cardNames[i]));
                     break;
                 case "Tax":
                     fields.add(new TaxField(cardNames[i], cardCosts[i]));
@@ -165,12 +159,22 @@ public class Game {
             System.out.println(f);
     }
 
-    public void notEnoughMoney(Player p)
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void notEnoughMoney(Player p, int needed)
+    {
+        //TODO implement
+        //TODO check if the player p is current player?
+    }
+
+    public void offerToBuy(Player p, BuyableField field)
     {
         //TODO implement
     }
 
-    public void offerToBuy(Player p, BuyableField field)
+    public void chanceChestCardGotten(String s)
     {
         //TODO implement
     }
