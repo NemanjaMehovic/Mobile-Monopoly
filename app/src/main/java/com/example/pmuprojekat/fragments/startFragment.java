@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
 import com.example.pmuprojekat.databinding.FragmentStartBinding;
+import com.example.pmuprojekat.dialog.newGameDialog;
 
 
 public class startFragment extends Fragment {
@@ -35,7 +36,9 @@ public class startFragment extends Fragment {
         binding = FragmentStartBinding.inflate(inflater, container, false);
 
         binding.newGameButton.setOnClickListener(v -> {
-            mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.GAME_FRAGMENT]);
+            //mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.GAME_FRAGMENT]);
+            newGameDialog dialog = new newGameDialog(mainActivity);
+            dialog.show(mainActivity.getSupportFragmentManager(), "Test");
         });
 
         binding.optionsButton.setOnClickListener(v -> {

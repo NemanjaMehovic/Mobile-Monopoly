@@ -155,6 +155,10 @@ public class Game {
         return players;
     }
 
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     public void notEnoughMoney(Player p, int needed)
     {
         //TODO implement

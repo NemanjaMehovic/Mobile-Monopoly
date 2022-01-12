@@ -83,7 +83,7 @@ public abstract class BuyableField extends Field {
     @Override
     public void effect(Player p) {
         if (!p.getOwned().contains(this)) {
-            if (owner != null) {
+            if (owner != null && !mortgage) {
                 int amount = getAmount(p);
                 owner.addMoney(amount);
                 if (!p.removeMoney(amount))
