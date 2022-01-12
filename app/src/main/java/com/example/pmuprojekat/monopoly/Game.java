@@ -19,9 +19,7 @@ public class Game {
     private static final int NumOfHotels = 12;
     private static Game instance;
     private List<Field> fields;
-    private List<PropertyBuyableField> propertyBuyableFields;
-    private List<RailroadBuyableField> railroadBuyableFields;
-    private List<UtilityBuyableField> utilityBuyableFields;
+    private List<BuyableField> buyableFields;
     private List<Player> players;
 
     public static Game getInstance() {
@@ -37,24 +35,17 @@ public class Game {
         return fields;
     }
 
-    public List<PropertyBuyableField> getPropertyBuyableFields() {
-        return propertyBuyableFields;
-    }
-
-    public List<RailroadBuyableField> getRailroadBuyableFields() {
-        return railroadBuyableFields;
-    }
-
-    public List<UtilityBuyableField> getUtilityBuyableFields() {
-        return utilityBuyableFields;
+    public List<BuyableField> getBuyableFields(){
+        return buyableFields;
     }
 
     public void initiateGame(String[] cardNames, int[] cardCosts, String[] cardTypes, String[] cardHousePrices, String[] cardRents) {
         Field.reset();
         fields = new ArrayList<>();
-        propertyBuyableFields = new ArrayList<>();
-        railroadBuyableFields = new ArrayList<>();
-        utilityBuyableFields = new ArrayList<>();
+        buyableFields = new ArrayList<>();
+        List<PropertyBuyableField> propertyBuyableFields = new ArrayList<>();
+        List<RailroadBuyableField> railroadBuyableFields = new ArrayList<>();
+        List<UtilityBuyableField> utilityBuyableFields = new ArrayList<>();
         for (int i = 0; i < cardNames.length; i++) {
             String[] splitType = cardTypes[i].split("-");
             switch (splitType[0]) {
@@ -95,6 +86,7 @@ public class Game {
                             break;
                     }
                     fields.add(tmp);
+                    buyableFields.add(tmp);
                     break;
                 default:
                     System.out.println("Error unknown type.");
@@ -108,7 +100,7 @@ public class Game {
             map.put(split[0], Integer.parseInt(split[1]));
         }
         for (PropertyBuyableField property : propertyBuyableFields)
-            property.setHouseHotelPrice(map.get(property.getColor()));
+            property.setHouseHotelPrice(map.get(property.getType()));
 
         HashMap<String, HashMap<String, List<Integer>>> rentPricesForCollors = new HashMap<>();
         List<Integer> utilRentPrices = new ArrayList<>();
@@ -148,13 +140,13 @@ public class Game {
         for (int i = 0; i < propertyBuyableFields.size() - 1; i++) {
             PropertyBuyableField property = propertyBuyableFields.get(i);
             PropertyBuyableField propertyNext = propertyBuyableFields.get(i + 1);
-            HashMap<String, List<Integer>> tmp = rentPricesForCollors.get(property.getColor());
+            HashMap<String, List<Integer>> tmp = rentPricesForCollors.get(property.getType());
             property.setRentPrices(
-                    property.getColor().equals(propertyNext.getColor()) ? tmp.get("Cheap") : tmp.get("Expansive")
+                    property.getType().equals(propertyNext.getType()) ? tmp.get("Cheap") : tmp.get("Expansive")
             );
         }
         PropertyBuyableField property = propertyBuyableFields.get(propertyBuyableFields.size() - 1);
-        property.setRentPrices(rentPricesForCollors.get(property.getColor()).get("Expansive"));
+        property.setRentPrices(rentPricesForCollors.get(property.getType()).get("Expansive"));
         for(Field f:fields)
             System.out.println(f);
     }

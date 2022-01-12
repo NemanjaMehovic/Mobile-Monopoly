@@ -78,6 +78,8 @@ public abstract class BuyableField extends Field {
 
     public abstract int getAmount(Player p);
 
+    public abstract String getType();
+
     @Override
     public void effect(Player p) {
         if (!p.getOwned().contains(this)) {

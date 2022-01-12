@@ -28,6 +28,11 @@ public class RailroadBuyableField extends BuyableField {
         return getRentPrices().get(numOwned - 1);
     }
 
+    @Override
+    public String getType() {
+        return "Railroad";
+    }
+
     @NonNull
     @Override
     public String toString() {

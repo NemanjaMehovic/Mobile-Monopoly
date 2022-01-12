@@ -50,26 +50,14 @@ public class ChanceChestField extends Field {
             case "Nearest":
                 String cardType = split[1];
                 showString = split[2];
-                if (cardType.equals("Utility")) {
-                    boolean check = true;
-                    while (check) {
-                        int pos = p.move(1);
-                        for (Field field : Game.getInstance().getUtilityBuyableFields())
-                            if (pos == field.getId()) {
-                                check = false;
-                                break;
-                            }
-                    }
-                } else {
-                    boolean check = true;
-                    while (check) {
-                        int pos = p.move(1);
-                        for (Field field : Game.getInstance().getRailroadBuyableFields())
-                            if (pos == field.getId()) {
-                                check = false;
-                                break;
-                            }
-                    }
+                boolean check = true;
+                while (check) {
+                    int pos = p.move(1);
+                    for (BuyableField field : Game.getInstance().getBuyableFields())
+                        if (pos == field.getId() && field.getType().equals(card)) {
+                            check = false;
+                            break;
+                        }
                 }
                 break;
             case "Back":

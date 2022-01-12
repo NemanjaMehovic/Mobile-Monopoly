@@ -25,6 +25,11 @@ public class UtilityBuyableField extends BuyableField {
         return getRentPrices().get(numOwned - 1) * p.getNumRolled();
     }
 
+    @Override
+    public String getType() {
+        return "Utility";
+    }
+
     @NonNull
     @Override
     public String toString() {
