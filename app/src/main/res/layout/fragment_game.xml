@@ -3,13 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.gameFragment">
 
 
-    <FrameLayout
-        android:id="@+id/testaaa"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/infoTab"
         android:layout_width="match_parent"
-        android:layout_height="70dp"/>
+        android:layout_height="140dp">
+
+        <TextView
+            android:id="@+id/playerNameInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Player Name:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/playerMoneyInfo"
+            />
+
+        <TextView
+            android:id="@+id/playerMoneyInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Money:"
+            app:layout_constraintLeft_toRightOf="@id/playerNameInfo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/cardNameInfo"
+            />
+
+        <TextView
+            android:id="@+id/cardNameInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card:"
+            app:layout_constraintLeft_toRightOf="@id/playerMoneyInfo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/testButton"
@@ -21,7 +54,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/testaaa">
+        android:layout_below="@id/infoTab">
         <ImageView
             android:id="@+id/board"
             android:layout_width="match_parent"

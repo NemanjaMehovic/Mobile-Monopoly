@@ -1,5 +1,6 @@
 package com.example.pmuprojekat.monopoly;
 
+import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.ChanceChestField;
 import com.example.pmuprojekat.monopoly.Fields.Field;
@@ -12,15 +13,20 @@ import com.example.pmuprojekat.monopoly.Fields.UtilityBuyableField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
     private static final int NumOfHouses = 32;
     private static final int NumOfHotels = 12;
+
     private static Game instance;
     private List<Field> fields;
     private List<BuyableField> buyableFields;
     private List<Player> players;
+    private Player currPlayer;
+    private int currPlayerNum;
+    private gameFragment fragment;
 
     public static Game getInstance() {
         if (instance == null)
@@ -35,7 +41,7 @@ public class Game {
         return fields;
     }
 
-    public List<BuyableField> getBuyableFields(){
+    public List<BuyableField> getBuyableFields() {
         return buyableFields;
     }
 
@@ -147,7 +153,7 @@ public class Game {
         }
         PropertyBuyableField property = propertyBuyableFields.get(propertyBuyableFields.size() - 1);
         property.setRentPrices(rentPricesForCollors.get(property.getType()).get("Expansive"));
-        for(Field f:fields)
+        for (Field f : fields)
             System.out.println(f);
     }
 
@@ -157,21 +163,51 @@ public class Game {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+        currPlayer = this.players.get(0);
+        currPlayerNum = 0;
     }
 
-    public void notEnoughMoney(Player p, int needed)
-    {
+    public Player getCurrPlayer() {
+        return currPlayer;
+    }
+
+    public int getCurrPlayerNum() {
+        return currPlayerNum;
+    }
+
+    public void setFragment(gameFragment fragment) {
+        this.fragment = fragment;
+    }
+
+    public void nextPlayer() {
+        currPlayerNum = (currPlayerNum + 1) % players.size();
+        currPlayer = players.get(currPlayerNum);
+    }
+
+    static boolean test = false;
+
+    public void rollDice() {
+        int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
+        int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
+
+        currPlayer.setNumRolled(dice1 + dice2);
+        int prevPosition = currPlayer.getPosition();
+        currPlayer.move(dice1 + dice2);
+        fragment.numberRolled(dice1, dice2, prevPosition);
+        fragment.updateCurrData(currPlayer);
+        nextPlayer();
+    }
+
+    public void notEnoughMoney(Player p, int needed) {
         //TODO implement
         //TODO check if the player p is current player?
     }
 
-    public void offerToBuy(Player p, BuyableField field)
-    {
+    public void offerToBuy(Player p, BuyableField field) {
         //TODO implement
     }
 
-    public void chanceChestCardGotten(String s)
-    {
+    public void chanceChestCardGotten(String s) {
         //TODO implement
     }
 }

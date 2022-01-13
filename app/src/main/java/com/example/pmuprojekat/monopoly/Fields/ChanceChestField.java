@@ -54,7 +54,7 @@ public class ChanceChestField extends Field {
                 while (check) {
                     int pos = p.move(1);
                     for (BuyableField field : Game.getInstance().getBuyableFields())
-                        if (pos == field.getId() && field.getType().equals(card)) {
+                        if (pos == field.getId() && field.getType().equals(cardType)) {
                             check = false;
                             break;
                         }
@@ -116,7 +116,6 @@ public class ChanceChestField extends Field {
                 break;
             case "Collect":
                 int amountCollect = Integer.parseInt(split[1]);
-                showString = split[2];
                 int sumCollect = 0;
                 showString = split[2];
                 for (Player p1 : Game.getInstance().getPlayers())

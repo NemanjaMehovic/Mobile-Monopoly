@@ -119,6 +119,10 @@ public class Player {
         this.chestJailFree = chestJailFree;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     public int getNumOfHouses() {
         int num = 0;
         for (BuyableField field : owned) {
