@@ -13,8 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
 import com.example.pmuprojekat.databinding.FragmentGameBinding;
+import com.example.pmuprojekat.dialog.infoDialog;
+import com.example.pmuprojekat.dialog.newGameDialog;
+import com.example.pmuprojekat.dialog.promptDialog;
+import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.Field;
 import com.example.pmuprojekat.monopoly.Game;
 import com.example.pmuprojekat.monopoly.Player;
@@ -45,6 +50,8 @@ public class gameFragment extends Fragment {
     private static final double BIG_ZONE_WIDTH = 200;
     private static final double SMALL_ZONE_WIDTH = 123;
 
+    public MainActivity mainActivity;
+
     private FragmentGameBinding binding;
     private List<Integer> stepCounts;
     private List<MoveDir> dirs;
@@ -60,6 +67,7 @@ public class gameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivity = (MainActivity) requireActivity();
     }
 
     @Override
@@ -103,6 +111,7 @@ public class gameFragment extends Fragment {
 
         binding.testButton.setOnClickListener(v -> {
             Game.getInstance().rollDice();
+            Game.getInstance().nextPlayer();
         });
 
         return binding.getRoot();
@@ -297,16 +306,82 @@ public class gameFragment extends Fragment {
     }
 
     public void numberRolled(int dice1, int dice2, int prevPosition) {
-        //TODO implement
-        Toast.makeText(getActivity(), "Rolled: " + dice1 + " and " + dice2, Toast.LENGTH_SHORT).show();
+        binding.numbRolledInfo.setText("Rolled: " + dice1 + " and " + dice2);
         movePlayer(dice1 + dice2, prevPosition);
     }
 
     public void updateCurrData(Player currPlayer) {
-        //TODO implement
         binding.playerNameInfo.setText("Player name: " + currPlayer.getPlayerName());
         binding.playerMoneyInfo.setText("Money: " + currPlayer.getCurrMoney());
         Field currField = Game.getInstance().getFields().get(currPlayer.getPosition());
-        binding.cardNameInfo.setText("Location: " + currField.getName());
+        List<Integer> rentPrices = null;
+
+        String cardName = "Location: " + currField.getName() + System.lineSeparator();
+        String cardPrice = "Price: ";
+        String cardOwner = "Owner: ";
+        String houseprice = "House price: ";
+        String numOfHouses = "Houses owned: ";
+        String hotelOwned = "Hotel owned: ";
+
+        String tmpPrice = "None";
+        String tmpOwner = "None";
+        String tmpHousePrice = "None";
+        String tmpHouses = "0";
+        String tmpHotel = "No";
+
+        if (currField instanceof BuyableField) {
+            BuyableField field = (BuyableField) currField;
+            if (field.getOwner() != null) {
+                tmpOwner = field.getOwner().getPlayerName();
+                int tmp = field.getHousesOwned();
+                tmpHouses = "" + (tmp % 5);
+                tmpHotel = tmp == 5 ? "Yes" : tmpHotel;
+            }
+            tmpPrice = "" + field.getPrice();
+            tmpHousePrice = "" + field.getHouseHotelPrice();
+            rentPrices = field.getRentPrices();
+        }
+        cardPrice += tmpPrice + System.lineSeparator();
+        cardOwner += tmpOwner + System.lineSeparator();
+        houseprice += tmpHousePrice + System.lineSeparator();
+        numOfHouses += tmpHouses + System.lineSeparator();
+        hotelOwned += tmpHotel;
+        String cardInfo = cardName + cardPrice + cardOwner + houseprice + numOfHouses + hotelOwned;
+        binding.cardNameInfo.setText(cardInfo);
+
+
+        StringBuilder rent = new StringBuilder("Rent ");
+        if(rentPrices != null)
+            for(int i = 0; i < rentPrices.size(); i++)
+            {
+                if((i >0) && i < (rentPrices.size()-1)) {
+                    String format = String.format("%04d", rentPrices.get(i));
+                    rent.append(i).append(":").append(format).append((i % 2 == 0) ? System.lineSeparator() : " ");
+                }
+                else if(i == (rentPrices.size()-1))
+                    rent.append("Hotel ").append(rentPrices.get(i));
+                else
+                    rent.append(rentPrices.get(i)).append(System.lineSeparator()).append("With houses").append(System.lineSeparator());
+            }
+        binding.cardRentInfo.setText(rent.toString());
+    }
+
+    public void setPromptDialog(promptDialog.Callback accept, promptDialog.Callback cancel, String info)
+    {
+        promptDialog dialog = new promptDialog(accept, cancel, info);
+        dialog.setCancelable(false);
+        dialog.show(mainActivity.getSupportFragmentManager(), "Prompt");
+    }
+
+    public void setInfoDIalog(promptDialog.Callback accept, String info)
+    {
+        infoDialog dialog = new infoDialog(accept, info);
+        dialog.setCancelable(false);
+        dialog.show(mainActivity.getSupportFragmentManager(), "Info");
+    }
+
+    public void setToast(String info)
+    {
+        Toast.makeText(mainActivity, info, Toast.LENGTH_SHORT).show();
     }
 }

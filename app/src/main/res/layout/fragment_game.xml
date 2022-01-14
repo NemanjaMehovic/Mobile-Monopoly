@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.gameFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <GridLayout
         android:id="@+id/infoTab"
+        android:columnCount="3"
+        android:rowCount="2"
         android:layout_width="match_parent"
         android:layout_height="140dp">
 
@@ -17,9 +18,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player Name:"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/playerMoneyInfo"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_row="0"
+            android:layout_column="0"
+            />
+
+        <TextView
+            android:id="@+id/numbRolledInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rolled:"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_row="0"
+            android:layout_column="1"
             />
 
         <TextView
@@ -27,22 +40,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Money:"
-            app:layout_constraintLeft_toRightOf="@id/playerNameInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/cardNameInfo"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_row="0"
+            android:layout_column="2"
             />
 
         <TextView
             android:id="@+id/cardNameInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Card:"
-            app:layout_constraintLeft_toRightOf="@id/playerMoneyInfo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:text="Location:\nPrice:\nOwner:\nHouse price:\nHouses owned:\nHotel owned:"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+            android:layout_row="1"
+            android:layout_column="0"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/cardRentInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rent"
+            android:layout_rowWeight="5"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_column="2"
+            />
+    </GridLayout>
 
     <Button
         android:id="@+id/testButton"

@@ -1,5 +1,7 @@
 package com.example.pmuprojekat.monopoly;
 
+import android.graphics.RadialGradient;
+
 import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.ChanceChestField;
@@ -13,6 +15,7 @@ import com.example.pmuprojekat.monopoly.Fields.UtilityBuyableField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
@@ -27,6 +30,7 @@ public class Game {
     private Player currPlayer;
     private int currPlayerNum;
     private gameFragment fragment;
+    private boolean back = false;
 
     public static Game getInstance() {
         if (instance == null)
@@ -182,20 +186,45 @@ public class Game {
     public void nextPlayer() {
         currPlayerNum = (currPlayerNum + 1) % players.size();
         currPlayer = players.get(currPlayerNum);
+        currPlayer.updateJailTime();
     }
 
     static boolean test = false;
 
     public void rollDice() {
-        int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
-        int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
+        if (currPlayer.getJailTime() != 0)
+            return;
+        Random random = new Random();
+        int dice1 = random.nextInt(6) + 1;
+        int dice2 = random.nextInt(6) + 1;
 
         currPlayer.setNumRolled(dice1 + dice2);
-        int prevPosition = currPlayer.getPosition();
+        int startingPosition = currPlayer.getPosition();
         currPlayer.move(dice1 + dice2);
-        fragment.numberRolled(dice1, dice2, prevPosition);
+        int positionAfterDiceRoll = currPlayer.getPosition();
+        if (positionAfterDiceRoll < startingPosition)
+            currPlayer.addMoney(200);
+
+        fragment.numberRolled(dice1, dice2, startingPosition);
         fragment.updateCurrData(currPlayer);
-        nextPlayer();
+        fields.get(currPlayer.getPosition()).effect(currPlayer);
+
+        int positionAfterEffect = currPlayer.getPosition();
+        if(positionAfterEffect != positionAfterDiceRoll) {
+            int tmpPosition = positionAfterDiceRoll;
+            int i = 0;
+            while(tmpPosition !=positionAfterEffect)
+            {
+                tmpPosition = (tmpPosition + 1) % 40;
+                i++;
+            }
+            fragment.movePlayer(i, positionAfterDiceRoll);
+            if(positionAfterEffect < positionAfterDiceRoll && currPlayer.getJailTime() == 0 && !back)
+                currPlayer.addMoney(200);
+            fields.get(currPlayer.getPosition()).effect(currPlayer);
+        }
+        back = false;
+        fragment.updateCurrData(currPlayer);
     }
 
     public void notEnoughMoney(Player p, int needed) {
@@ -204,10 +233,30 @@ public class Game {
     }
 
     public void offerToBuy(Player p, BuyableField field) {
+        String info = "Do you wish to buy " + field.getName() + " for $" + field.getPrice();
+        fragment.setPromptDialog(() -> {
+            acceptedToBuy(p, field);
+        }, () -> {
+            startAuction(field);
+        }, info);
+    }
+
+    private void acceptedToBuy(Player p, BuyableField field) {
+        if (p.getCurrMoney() >= field.getPrice()) {
+            p.removeMoney(field.getPrice());
+            p.addOwned(field);
+            field.setOwner(p);
+            fragment.updateCurrData(p);
+        } else
+            startAuction(field);
+    }
+
+    private void startAuction(BuyableField field) {
         //TODO implement
     }
 
-    public void chanceChestCardGotten(String s) {
-        //TODO implement
+    public void chanceChestCardGotten(String s, Boolean back) {
+        this.back = back;
+        fragment.setToast(s);
     }
 }

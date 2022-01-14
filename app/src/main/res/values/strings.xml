@@ -13,4 +13,6 @@
     <string name="player_6">Player 6</string>
     <string name="player_7">Player 7</string>
     <string name="player_8">Player 8</string>
+    <string name="callback_button_string">Accept</string>
+    <string name="cancel_button_string">Cancel</string>
 </resources>

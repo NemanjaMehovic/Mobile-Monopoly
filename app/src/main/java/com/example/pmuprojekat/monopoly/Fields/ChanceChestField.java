@@ -26,6 +26,7 @@ public class ChanceChestField extends Field {
     @Override
     public void effect(Player p) {
         String card = "";
+        boolean back = false;
         if (type == ChanceChestType.CHANCE) {
             card = Chances.get(0);
             Chances.remove(0);
@@ -64,6 +65,7 @@ public class ChanceChestField extends Field {
                 int numSteps = Integer.parseInt(split[1]);
                 showString = split[2];
                 p.setPosition(p.getPosition() - numSteps + ((p.getPosition() - numSteps) < 0 ? 40 : 0));
+                back = true;
                 break;
             case "JailFree":
                 showString = split[1];
@@ -133,7 +135,7 @@ public class ChanceChestField extends Field {
             else
                 Chests.add(card);
         }
-        Game.getInstance().chanceChestCardGotten(showString);
+        Game.getInstance().chanceChestCardGotten(showString, back);
     }
 
     public static void initChanceChest(String[] chanceCards, String[] chestCards) {
