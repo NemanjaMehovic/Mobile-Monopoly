@@ -17,6 +17,7 @@ public class Player {
     private int numRolled;
     private String chanceJailFree;
     private String chestJailFree;
+    private boolean lost;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -27,6 +28,7 @@ public class Player {
         this.owned = new ArrayList<>();
         this.chanceJailFree = "";
         this.chestJailFree = "";
+        this.lost = false;
     }
 
     public List<BuyableField> getOwned() {
@@ -139,5 +141,13 @@ public class Player {
             num += tmp > 4 ? 1 : 0;
         }
         return num;
+    }
+
+    public boolean isLost() {
+        return lost;
+    }
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
     }
 }

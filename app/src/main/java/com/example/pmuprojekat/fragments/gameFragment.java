@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
 import com.example.pmuprojekat.databinding.FragmentGameBinding;
+import com.example.pmuprojekat.dialog.auctionDialog;
 import com.example.pmuprojekat.dialog.infoDialog;
 import com.example.pmuprojekat.dialog.newGameDialog;
 import com.example.pmuprojekat.dialog.promptDialog;
@@ -115,6 +116,13 @@ public class gameFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    public void updatePlayers()
+    {
+        for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
+            if(Game.getInstance().getPlayers().get(i).isLost())
+                listImageView.get(i).setVisibility(View.GONE);
     }
 
     public void movePlayer(int numOfTimes, int prevPosition) {
@@ -380,8 +388,20 @@ public class gameFragment extends Fragment {
         dialog.show(mainActivity.getSupportFragmentManager(), "Info");
     }
 
+    public void startAuction(BuyableField field)
+    {
+        auctionDialog dialog = new auctionDialog(mainActivity, field);
+        dialog.setCancelable(false);
+        dialog.show(mainActivity.getSupportFragmentManager(), "Auction");
+    }
+
     public void setToast(String info)
     {
         Toast.makeText(mainActivity, info, Toast.LENGTH_SHORT).show();
+    }
+
+    public void jailOptions()
+    {
+        //TODO implement
     }
 }
