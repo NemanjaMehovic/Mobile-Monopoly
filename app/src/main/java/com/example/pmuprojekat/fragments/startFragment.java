@@ -36,6 +36,7 @@ public class startFragment extends Fragment {
         binding = FragmentStartBinding.inflate(inflater, container, false);
 
         binding.newGameButton.setOnClickListener(v -> {
+            mainActivity.resetGame();
             newGameDialog dialog = new newGameDialog(mainActivity);
             dialog.show(mainActivity.getSupportFragmentManager(), "PlayerNames");
         });

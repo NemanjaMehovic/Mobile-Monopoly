@@ -30,10 +30,11 @@ public class Game {
     private Player currPlayer;
     private int currPlayerNum;
     private gameFragment fragment;
-    private boolean back = false;
+    private boolean back;
     private int numOfHousesLeft;
     private int numOfHotelsLeft;
-    private boolean gameFinished = false;
+    private boolean gameFinished;
+    private boolean alreadyRolled;
 
     public static Game getInstance() {
         if (instance == null)
@@ -56,6 +57,9 @@ public class Game {
         Field.reset();
         numOfHotelsLeft = NumOfHotels;
         numOfHousesLeft = NumOfHouses;
+        gameFinished = false;
+        alreadyRolled = false;
+        back = false;
         fields = new ArrayList<>();
         buyableFields = new ArrayList<>();
         List<PropertyBuyableField> propertyBuyableFields = new ArrayList<>();
@@ -176,6 +180,10 @@ public class Game {
         currPlayerNum = 0;
     }
 
+    public boolean isAlreadyRolled() {
+        return alreadyRolled;
+    }
+
     public Player getCurrPlayer() {
         return currPlayer;
     }
@@ -205,18 +213,17 @@ public class Game {
     }
 
     public void nextPlayer() {
-        if(gameFinished)
+        if (gameFinished)
             return;
         do {
             currPlayerNum = (currPlayerNum + 1) % players.size();
             currPlayer = players.get(currPlayerNum);
-        }while(currPlayer.isLost());
+        } while (currPlayer.isLost());
+        alreadyRolled = false;
         currPlayer.updateJailTime();
-        if(currPlayer.getJailTime() > 0)
-            fragment.jailOptions();
+        playerJailUpdate();
+        fragment.updateCurrData(currPlayer);
     }
-
-    static boolean test = false;
 
     public void rollDice() {
         if (currPlayer.getJailTime() != 0 || gameFinished)
@@ -237,52 +244,49 @@ public class Game {
         fields.get(currPlayer.getPosition()).effect(currPlayer);
 
         int positionAfterEffect = currPlayer.getPosition();
-        if(positionAfterEffect != positionAfterDiceRoll) {
+        if (positionAfterEffect != positionAfterDiceRoll) {
             int tmpPosition = positionAfterDiceRoll;
             int i = 0;
-            while(tmpPosition !=positionAfterEffect)
-            {
+            while (tmpPosition != positionAfterEffect) {
                 tmpPosition = (tmpPosition + 1) % 40;
                 i++;
             }
             fragment.movePlayer(i, positionAfterDiceRoll);
-            if(positionAfterEffect < positionAfterDiceRoll && currPlayer.getJailTime() == 0 && !back)
+            if (positionAfterEffect < positionAfterDiceRoll && currPlayer.getJailTime() == 0 && !back)
                 currPlayer.addMoney(200);
             fields.get(currPlayer.getPosition()).effect(currPlayer);
         }
         back = false;
-        if(currPlayer.isLost())
+        alreadyRolled = true;
+        if (currPlayer.isLost())
             nextPlayer();
+        else
+            fragment.jailOptions();
         fragment.updateCurrData(currPlayer);
     }
 
     public void notEnoughMoney(Player p, int needed) {
         p.setLost(true);
-        if(currPlayer != p)
+        if (currPlayer != p)
             takeEverything(currPlayer, p);
-        else
-        {
+        else {
             int position = p.getPosition();
             Field field = fields.get(position);
-            if(field instanceof BuyableField)
-            {
+            if (field instanceof BuyableField) {
                 BuyableField f = (BuyableField) field;
                 takeEverything(f.getOwner(), currPlayer);
-            }
-            else
-            {
+            } else {
                 numOfHousesLeft += p.getNumOfHouses();
                 numOfHotelsLeft += p.getNumOfHotels();
-                if(!p.getChestJailFree().equals("")) {
+                if (!p.getChestJailFree().equals("")) {
                     ChanceChestField.putBackChest(p.getChestJailFree());
                     p.setChestJailFree("");
                 }
-                if(!p.getChanceJailFree().equals("")) {
+                if (!p.getChanceJailFree().equals("")) {
                     ChanceChestField.putBackChance(p.getChanceJailFree());
                     p.setChanceJailFree("");
                 }
-                for(BuyableField f:p.getOwned())
-                {
+                for (BuyableField f : p.getOwned()) {
                     f.setOwner(null);
                     f.setMortgage(false);
                     f.setHousesOwned(0);
@@ -295,27 +299,29 @@ public class Game {
         fragment.setToast("Player " + p.getPlayerName() + " went bankrupt");
         int flag = 0;
         Player possibleWinner = null;
-        for(Player player:players)
-            if(!player.isLost()) {
+        for (Player player : players)
+            if (!player.isLost()) {
                 flag++;
                 possibleWinner = player;
             }
-        if(flag == 1)
-            fragment.setToast("Winner is " + possibleWinner.getPlayerName());
+        if (flag == 1) {
+            gameFinished = true;
+            fragment.setInfoDIalog(() ->{
+                fragment.finishedGame();
+            }, "Winner is " + possibleWinner.getPlayerName());
+        }
     }
 
-    private void takeEverything(Player take, Player give)
-    {
-        if(!give.getChestJailFree().equals("")) {
+    private void takeEverything(Player take, Player give) {
+        if (!give.getChestJailFree().equals("")) {
             take.setChestJailFree(give.getChestJailFree());
             give.setChestJailFree("");
         }
-        if(!give.getChanceJailFree().equals("")) {
+        if (!give.getChanceJailFree().equals("")) {
             take.setChanceJailFree(give.getChanceJailFree());
             give.setChanceJailFree("");
         }
-        for(BuyableField field:give.getOwned())
-        {
+        for (BuyableField field : give.getOwned()) {
             field.setOwner(take);
             take.addOwned(field);
         }
@@ -344,8 +350,7 @@ public class Game {
         fragment.startAuction(field);
     }
 
-    public void boughtField(Player p, BuyableField field, int price)
-    {
+    public void boughtField(Player p, BuyableField field, int price) {
         p.removeMoney(price);
         p.addOwned(field);
         field.setOwner(p);
@@ -357,34 +362,28 @@ public class Game {
         fragment.setToast(s);
     }
 
-    public void buyHouse(BuyableField field)
-    {
+    public void buyHouse(BuyableField field) {
         //TODO implement
     }
 
-    public void mortageField(BuyableField field)
-    {
+    public void mortageField(BuyableField field) {
         field.setMortgage(true);
-        currPlayer.addMoney(field.getPrice()/2);
+        currPlayer.addMoney(field.getPrice() / 2);
     }
 
-    public void payOffMortage(BuyableField field)
-    {
+    public void payOffMortage(BuyableField field) {
         field.setMortgage(false);
-        currPlayer.removeMoney((int) (field.getPrice()/2 * 1.1));
+        currPlayer.removeMoney((int) (field.getPrice() / 2 * 1.1));
     }
 
-    public void trade(Player p, List<BuyableField> offerFields, int offerMoney, List<BuyableField> receiveFields, int receiveMoney)
-    {
-        for(BuyableField field:offerFields)
-        {
+    public void trade(Player p, List<BuyableField> offerFields, int offerMoney, List<BuyableField> receiveFields, int receiveMoney) {
+        for (BuyableField field : offerFields) {
             currPlayer.removeOwned(field);
             field.setOwner(p);
             p.addOwned(field);
         }
 
-        for(BuyableField field:receiveFields)
-        {
+        for (BuyableField field : receiveFields) {
             p.removeOwned(field);
             field.setOwner(currPlayer);
             currPlayer.addOwned(field);
@@ -394,5 +393,9 @@ public class Game {
         currPlayer.addMoney(receiveMoney);
         p.removeMoney(receiveMoney);
         p.addMoney(offerMoney);
+    }
+
+    public void playerJailUpdate() {
+        fragment.jailOptions();
     }
 }

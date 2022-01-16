@@ -15,4 +15,21 @@
     <string name="player_8">Player 8</string>
     <string name="callback_button_string">Accept</string>
     <string name="cancel_button_string">Cancel</string>
+    <string name="pay_50">Pay $50</string>
+    <string name="wait">Wait</string>
+    <string name="use_get_out_of_jail_free_card">Use get out of jail free card</string>
+    <string name="player_name">Player Name:</string>
+    <string name="rolled">Rolled:</string>
+    <string name="money">Money:</string>
+    <string name="location_nprice_nowner_nhouse_price_nhouses_owned_nhotel_owned">Location:\nPrice:\nOwner:\nHouse price:\nHouses owned:\nHotel owned:</string>
+    <string name="rent">Rent</string>
+    <string name="roll_dice">Roll dice</string>
+    <string name="next_player">Next player</string>
+    <string name="jail">Jail</string>
+    <string name="info">Info</string>
+    <string name="mortgage">Mortgage</string>
+    <string name="pay_off_mortgage">Pay off mortgage</string>
+    <string name="buy_property">Buy property</string>
+    <string name="sell_nproperty">Sell\nproperty</string>
+    <string name="close">Close</string>
 </resources>

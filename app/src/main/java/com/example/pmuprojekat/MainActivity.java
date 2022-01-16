@@ -39,6 +39,20 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.mainContentFrame, new startFragment(), FRAGMENT_TAG)
                     .commit();
 
+        setContentView(binding.getRoot());
+    }
+
+    public void switchFragment(Fragment fragment)
+    {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainContentFrame, fragment, FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void resetGame()
+    {
         String[] cardNames = getResources().getStringArray(R.array.cardName);
         int[] cardCosts = getResources().getIntArray(R.array.cardCost);
         String[] cardTypes = getResources().getStringArray(R.array.cardType);
@@ -50,16 +64,5 @@ public class MainActivity extends AppCompatActivity {
         String[] chestCards = getResources().getStringArray(R.array.chestCards);
 
         ChanceChestField.initChanceChest(chanceCards, chestCards);
-
-        setContentView(binding.getRoot());
-    }
-
-    public void switchFragment(Fragment fragment)
-    {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.mainContentFrame, fragment, FRAGMENT_TAG)
-                .addToBackStack(null)
-                .commit();
     }
 }

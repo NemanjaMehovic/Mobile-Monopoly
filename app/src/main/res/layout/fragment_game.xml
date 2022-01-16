@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.gameFragment">
 
 
@@ -17,7 +18,7 @@
             android:id="@+id/playerNameInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Player Name:"
+            android:text="@string/player_name"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_row="0"
@@ -28,7 +29,7 @@
             android:id="@+id/numbRolledInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rolled:"
+            android:text="@string/rolled"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_row="0"
@@ -39,7 +40,7 @@
             android:id="@+id/playerMoneyInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Money:"
+            android:text="@string/money"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_row="0"
@@ -50,7 +51,7 @@
             android:id="@+id/cardNameInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location:\nPrice:\nOwner:\nHouse price:\nHouses owned:\nHotel owned:"
+            android:text="@string/location_nprice_nowner_nhouse_price_nhouses_owned_nhotel_owned"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_columnSpan="2"
@@ -62,7 +63,7 @@
             android:id="@+id/cardRentInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rent"
+            android:text="@string/rent"
             android:layout_rowWeight="5"
             android:layout_columnWeight="1"
             android:layout_row="1"
@@ -70,23 +71,129 @@
             />
     </GridLayout>
 
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test move"
-        android:layout_centerInParent="true"
-        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/infoTab">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:translationZ="30dp">
+            <Button
+                android:id="@+id/rollButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/roll_dice"
+                app:layout_constraintTop_toBottomOf="@id/jailOptionsButton"
+                app:layout_constraintBottom_toTopOf="@id/nextPlayerButton"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+            <Button
+                android:id="@+id/nextPlayerButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:enabled="false"
+                android:text="@string/next_player"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rollButton"/>
+
+            <Button
+                android:id="@+id/jailOptionsButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:enabled="false"
+                android:text="@string/jail"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/rollButton"/>
+
+            <Button
+                android:id="@+id/optionsButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/options"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/jailOptionsButton"
+                app:layout_constraintRight_toLeftOf="@id/jailOptionsButton" />
+
+            <Button
+                android:id="@+id/infoButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/info"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/jailOptionsButton"
+                app:layout_constraintLeft_toRightOf="@id/jailOptionsButton" />
+
+            <Button
+                android:id="@+id/mortgageButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/mortgage"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/rollButton"
+                app:layout_constraintLeft_toRightOf="@id/rollButton" />
+
+            <Button
+                android:id="@+id/payOffMortgage"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/pay_off_mortgage"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/nextPlayerButton"
+                app:layout_constraintLeft_toRightOf="@id/nextPlayerButton" />
+
+            <Button
+                android:id="@+id/buyHouseButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:text="@string/buy_property"
+                android:textSize="@dimen/game_button_text_size"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/rollButton"
+                app:layout_constraintTop_toTopOf="@id/rollButton"
+                app:layout_constraintBottom_toBottomOf="@id/rollButton"/>
+
+            <Button
+                android:id="@+id/sellHouseButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/sell_nproperty"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/nextPlayerButton"
+                app:layout_constraintRight_toLeftOf="@id/nextPlayerButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageView
             android:id="@+id/board"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/monopoly_board"/>
+            android:src="@drawable/monopoly_board" />
 
         <RelativeLayout
             android:id="@+id/player1Layout"

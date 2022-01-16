@@ -13,10 +13,12 @@
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/drawable-v24/outline_two_wheeler_20.xml" value="0.5703125" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.40572916666666664" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_field_info.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_info.xml" value="0.5" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_jail.xml" value="0.5" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_newgame.xml" value="0.5" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_prompt.xml" value="0.5" />
-        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_game.xml" value="0.33" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_game.xml" value="0.5" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_history.xml" value="0.5544554455445545" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_options.xml" value="0.5544554455445545" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_start.xml" value="0.33" />

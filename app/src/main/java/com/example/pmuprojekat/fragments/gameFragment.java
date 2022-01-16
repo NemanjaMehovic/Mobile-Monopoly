@@ -17,7 +17,9 @@ import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
 import com.example.pmuprojekat.databinding.FragmentGameBinding;
 import com.example.pmuprojekat.dialog.auctionDialog;
+import com.example.pmuprojekat.dialog.fieldInfoDialog;
 import com.example.pmuprojekat.dialog.infoDialog;
+import com.example.pmuprojekat.dialog.jailDialog;
 import com.example.pmuprojekat.dialog.newGameDialog;
 import com.example.pmuprojekat.dialog.promptDialog;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
@@ -110,18 +112,35 @@ public class gameFragment extends Fragment {
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
             listImageView.get(i).setVisibility(View.VISIBLE);
 
-        binding.testButton.setOnClickListener(v -> {
+        binding.rollButton.setOnClickListener(v -> {
+            binding.nextPlayerButton.setEnabled(true);
+            binding.rollButton.setEnabled(false);
             Game.getInstance().rollDice();
+        });
+
+        binding.nextPlayerButton.setOnClickListener(v -> {
+            binding.nextPlayerButton.setEnabled(false);
             Game.getInstance().nextPlayer();
+        });
+
+        binding.jailOptionsButton.setOnClickListener(v -> {
+            jailDialog dialog = new jailDialog();
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "JailOptions");
+        });
+
+        binding.infoButton.setOnClickListener(v -> {
+            fieldInfoDialog dialog = new fieldInfoDialog(mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "FieldInfo");
         });
 
         return binding.getRoot();
     }
 
-    public void updatePlayers()
-    {
+    public void updatePlayers() {
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
-            if(Game.getInstance().getPlayers().get(i).isLost())
+            if (Game.getInstance().getPlayers().get(i).isLost())
                 listImageView.get(i).setVisibility(View.GONE);
     }
 
@@ -359,49 +378,57 @@ public class gameFragment extends Fragment {
 
 
         StringBuilder rent = new StringBuilder("Rent ");
-        if(rentPrices != null)
-            for(int i = 0; i < rentPrices.size(); i++)
-            {
-                if((i >0) && i < (rentPrices.size()-1)) {
-                    String format = String.format("%04d", rentPrices.get(i));
-                    rent.append(i).append(":").append(format).append((i % 2 == 0) ? System.lineSeparator() : " ");
+        if (rentPrices != null) {
+            if (rentPrices.size() > 5)
+                for (int i = 0; i < rentPrices.size(); i++) {
+                    if ((i > 0) && i < (rentPrices.size() - 1)) {
+                        String format = String.format("%04d", rentPrices.get(i));
+                        rent.append(i).append(":").append(format).append((i % 2 == 0) ? System.lineSeparator() : " ");
+                    } else if (i == (rentPrices.size() - 1))
+                        rent.append("Hotel ").append(rentPrices.get(i));
+                    else
+                        rent.append(rentPrices.get(i)).append(System.lineSeparator()).append("With houses").append(System.lineSeparator());
                 }
-                else if(i == (rentPrices.size()-1))
-                    rent.append("Hotel ").append(rentPrices.get(i));
-                else
-                    rent.append(rentPrices.get(i)).append(System.lineSeparator()).append("With houses").append(System.lineSeparator());
-            }
+            else
+                for (int i = 0; i < rentPrices.size(); i++) {
+                    rent.append(rentPrices.get(i));
+                    if(i != (rentPrices.size() - 1))
+                        rent.append(", ");
+                }
+        }
         binding.cardRentInfo.setText(rent.toString());
     }
 
-    public void setPromptDialog(promptDialog.Callback accept, promptDialog.Callback cancel, String info)
-    {
+    public void setPromptDialog(promptDialog.Callback accept, promptDialog.Callback cancel, String info) {
         promptDialog dialog = new promptDialog(accept, cancel, info);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Prompt");
     }
 
-    public void setInfoDIalog(promptDialog.Callback accept, String info)
-    {
+    public void setInfoDIalog(promptDialog.Callback accept, String info) {
         infoDialog dialog = new infoDialog(accept, info);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Info");
     }
 
-    public void startAuction(BuyableField field)
-    {
+    public void startAuction(BuyableField field) {
         auctionDialog dialog = new auctionDialog(mainActivity, field);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Auction");
     }
 
-    public void setToast(String info)
-    {
+    public void setToast(String info) {
         Toast.makeText(mainActivity, info, Toast.LENGTH_SHORT).show();
     }
 
-    public void jailOptions()
-    {
-        //TODO implement
+    public void jailOptions() {
+        Player currPlayer = Game.getInstance().getCurrPlayer();
+        binding.jailOptionsButton.setEnabled(currPlayer.getJailTime() > 0);
+        binding.nextPlayerButton.setEnabled(currPlayer.getJailTime() > 0 || Game.getInstance().isAlreadyRolled());
+        binding.rollButton.setEnabled(!(currPlayer.getJailTime() > 0) && !Game.getInstance().isAlreadyRolled());
+    }
+
+    public void finishedGame() {
+        mainActivity.getSupportFragmentManager().popBackStack();
     }
 }
