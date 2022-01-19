@@ -1,6 +1,7 @@
 package com.example.pmuprojekat.monopoly;
 
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
+import com.example.pmuprojekat.monopoly.Fields.Field;
 import com.example.pmuprojekat.monopoly.Fields.PropertyBuyableField;
 
 import java.util.ArrayList;
@@ -149,5 +150,78 @@ public class Player {
 
     public void setLost(boolean lost) {
         this.lost = lost;
+    }
+
+    public List<BuyableField> getAllFieldsThatCanBeMortgaged() {
+        List<BuyableField> list = new ArrayList<>();
+        for (BuyableField b : owned)
+            if (b.getHousesOwned() == 0 && !b.isMortgage())
+                list.add(b);
+        return list;
+    }
+
+    public List<BuyableField> getAllMortgagedFields() {
+        List<BuyableField> list = new ArrayList<>();
+        for (BuyableField b : owned)
+            if (b.isMortgage())
+                list.add(b);
+        return list;
+    }
+
+    private List<BuyableField> getAllSameTypeFields(BuyableField field) {
+        List<BuyableField> allBuyableFields = Game.getInstance().getBuyableFields();
+        List<BuyableField> list = new ArrayList<>();
+
+        for (BuyableField f : allBuyableFields)
+            if (f.getType().equals(field.getType()))
+                list.add(f);
+
+        return list;
+    }
+
+    public List<BuyableField> getAllFieldsWithProperty() {
+        List<BuyableField> list = new ArrayList<>();
+        for (BuyableField b : owned)
+            if (b.getHousesOwned() != 0)
+                list.add(b);
+        return list;
+    }
+
+    public List<BuyableField> getAllFieldsThatCanHaveAProperty() {
+        List<BuyableField> list = new ArrayList<>();
+
+        for (BuyableField field : owned) {
+            if (!field.canHaveHouse() || field.getHousesOwned() == 5)
+                continue;
+            List<BuyableField> tmp = getAllSameTypeFields(field);
+            int ownedNum = 0;
+            for (BuyableField tmpField : tmp)
+                if (tmpField.getOwner() == this)
+                    ownedNum++;
+            if (ownedNum == tmp.size())
+                list.add(field);
+        }
+
+        return list;
+    }
+
+    public List<BuyableField> getAllTradableFields()
+    {
+        List<BuyableField> list = new ArrayList<>();
+
+        for(BuyableField field:owned)
+        {
+            if(field.getHousesOwned() != 0)
+                continue;
+            list.add(field);
+            List<BuyableField> tmp = getAllSameTypeFields(field);
+            for(BuyableField tmpField:tmp)
+                if(tmpField.getHousesOwned() != 0)
+                {
+                    list.remove(field);
+                    break;
+                }
+        }
+        return list;
     }
 }

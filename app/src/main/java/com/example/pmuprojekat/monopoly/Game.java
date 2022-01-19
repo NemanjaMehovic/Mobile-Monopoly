@@ -306,7 +306,7 @@ public class Game {
             }
         if (flag == 1) {
             gameFinished = true;
-            fragment.setInfoDIalog(() ->{
+            fragment.setInfoDIalog(() -> {
                 fragment.finishedGame();
             }, "Winner is " + possibleWinner.getPlayerName());
         }
@@ -363,7 +363,30 @@ public class Game {
     }
 
     public void buyHouse(BuyableField field) {
-        //TODO implement
+        if (field.getHouseHotelPrice() > currPlayer.getCurrMoney())
+            return;
+        if (field.getHousesOwned() == 4 && numOfHotelsLeft > 0) {
+            numOfHousesLeft += 4;
+            field.setHousesOwned(5);
+            currPlayer.removeMoney(field.getHouseHotelPrice());
+        } else if (numOfHousesLeft > 0 && field.getHousesOwned() < 4) {
+            numOfHousesLeft--;
+            field.setHousesOwned(field.getHousesOwned() + 1);
+            currPlayer.removeMoney(field.getHouseHotelPrice());
+        }
+    }
+
+    public void sellHouse(BuyableField field) {
+        if (field.getHousesOwned() == 5 && numOfHousesLeft >= 4) {
+            numOfHousesLeft -= 4;
+            numOfHotelsLeft++;
+            field.setHousesOwned(4);
+            currPlayer.addMoney(field.getHouseHotelPrice() / 2);
+        } else if (field.getHousesOwned() > 0 && field.getHousesOwned() < 5) {
+            numOfHousesLeft++;
+            field.setHousesOwned(field.getHousesOwned() - 1);
+            currPlayer.addMoney(field.getHouseHotelPrice() / 2);
+        }
     }
 
     public void mortageField(BuyableField field) {

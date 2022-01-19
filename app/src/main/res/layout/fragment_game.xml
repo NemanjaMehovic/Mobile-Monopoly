@@ -114,18 +114,18 @@
                 android:textSize="@dimen/game_button_text_size"
                 android:enabled="false"
                 android:text="@string/jail"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/infoOptiobsButton"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/rollButton"/>
 
             <Button
-                android:id="@+id/optionsButton"
+                android:id="@+id/tradeButtond"
                 android:layout_width="@dimen/game_button_width"
                 android:layout_height="@dimen/game_button_height"
                 android:layout_margin="@dimen/button_margin"
                 android:textSize="@dimen/game_button_text_size"
-                android:text="@string/options"
+                android:text="Trade"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@id/jailOptionsButton"
                 app:layout_constraintRight_toLeftOf="@id/jailOptionsButton" />
@@ -185,6 +185,18 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBaseline_toBaselineOf="@id/nextPlayerButton"
                 app:layout_constraintRight_toLeftOf="@id/nextPlayerButton" />
+
+            <Button
+                android:id="@+id/infoOptiobsButton"
+                android:layout_width="@dimen/game_button_width"
+                android:layout_height="@dimen/game_button_height"
+                android:layout_margin="@dimen/button_margin"
+                android:textSize="@dimen/game_button_text_size"
+                android:text="@string/options"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/jailOptionsButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
