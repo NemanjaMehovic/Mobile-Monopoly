@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/currPlayerNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="@string/app_name"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/receiveScrollView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/offerScrollView"/>
+
+
+    <Spinner
+        android:id="@+id/selectPlayerSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/offerScrollView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/receiveScrollView"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/offerScrollView"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/receiveScrollView"
+        app:layout_constraintTop_toBottomOf="@id/currPlayerNameTextView">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/offerRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/receiveScrollView"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toBottomOf="@id/selectPlayerSpinner"
+        app:layout_constraintLeft_toRightOf="@id/offerScrollView"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/receiveRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/offerMoney"
+        android:layout_width="@dimen/textFieldWidth"
+        android:layout_height="wrap_content"
+        android:hint="@string/money2"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintTop_toBottomOf="@id/offerScrollView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/receiveMoney"
+        app:layout_constraintBottom_toTopOf="@id/tradeButtonCancel">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/offerMoneyEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/receiveMoney"
+        android:layout_width="@dimen/textFieldWidth"
+        android:layout_height="wrap_content"
+        android:hint="@string/money2"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintTop_toTopOf="@id/offerMoney"
+        app:layout_constraintLeft_toRightOf="@id/offerMoney"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/offerMoney">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/receiveMoneyEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/tradeButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_button_string"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintTop_toBottomOf="@id/offerMoney"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tradeButtonAccept"/>
+
+    <Button
+        android:id="@+id/tradeButtonAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/callback_button_string"
+        android:layout_margin="@dimen/button_margin"
+        app:layout_constraintTop_toTopOf="@id/tradeButtonCancel"
+        app:layout_constraintBottom_toBottomOf="@id/tradeButtonCancel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tradeButtonCancel"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -240,7 +240,6 @@ public class Game {
             currPlayer.addMoney(200);
 
         fragment.numberRolled(dice1, dice2, startingPosition);
-        fragment.updateCurrData(currPlayer);
         fields.get(currPlayer.getPosition()).effect(currPlayer);
 
         int positionAfterEffect = currPlayer.getPosition();
@@ -374,6 +373,7 @@ public class Game {
             field.setHousesOwned(field.getHousesOwned() + 1);
             currPlayer.removeMoney(field.getHouseHotelPrice());
         }
+        fragment.updateCurrData(currPlayer);
     }
 
     public void sellHouse(BuyableField field) {
@@ -387,16 +387,19 @@ public class Game {
             field.setHousesOwned(field.getHousesOwned() - 1);
             currPlayer.addMoney(field.getHouseHotelPrice() / 2);
         }
+        fragment.updateCurrData(currPlayer);
     }
 
     public void mortageField(BuyableField field) {
         field.setMortgage(true);
         currPlayer.addMoney(field.getPrice() / 2);
+        fragment.updateCurrData(currPlayer);
     }
 
     public void payOffMortage(BuyableField field) {
         field.setMortgage(false);
         currPlayer.removeMoney((int) (field.getPrice() / 2 * 1.1));
+        fragment.updateCurrData(currPlayer);
     }
 
     public void trade(Player p, List<BuyableField> offerFields, int offerMoney, List<BuyableField> receiveFields, int receiveMoney) {
@@ -416,6 +419,7 @@ public class Game {
         currPlayer.addMoney(receiveMoney);
         p.removeMoney(receiveMoney);
         p.addMoney(offerMoney);
+        fragment.updateCurrData(currPlayer);
     }
 
     public void playerJailUpdate() {

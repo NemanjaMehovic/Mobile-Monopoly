@@ -20,8 +20,10 @@ import com.example.pmuprojekat.dialog.auctionDialog;
 import com.example.pmuprojekat.dialog.fieldInfoDialog;
 import com.example.pmuprojekat.dialog.infoDialog;
 import com.example.pmuprojekat.dialog.jailDialog;
+import com.example.pmuprojekat.dialog.mortageDialog;
 import com.example.pmuprojekat.dialog.newGameDialog;
 import com.example.pmuprojekat.dialog.promptDialog;
+import com.example.pmuprojekat.dialog.tradeDialog;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.Field;
 import com.example.pmuprojekat.monopoly.Game;
@@ -133,6 +135,61 @@ public class gameFragment extends Fragment {
             fieldInfoDialog dialog = new fieldInfoDialog(mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "FieldInfo");
+        });
+
+        binding.mortgageButton.setOnClickListener(v -> {
+            List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsThatCanBeMortgaged();
+            if(list.size() == 0)
+            {
+                setToast("You have nothing that can be mortgaged");
+                return;
+            }
+            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE, mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "MortgageDialog");
+        });
+
+        binding.payOffMortgage.setOnClickListener(v -> {
+            List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllMortgagedFields();
+            if(list.size() == 0)
+            {
+                setToast("You have nothing that is mortgaged");
+                return;
+            }
+            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE_PAY, mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "MortgagePayDialog");
+        });
+
+        binding.buyHouseButton.setOnClickListener(v -> {
+            List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsThatCanHaveAProperty();
+            if(list.size() == 0)
+            {
+                setToast("You have nothing that can buy a house/hotel");
+                return;
+            }
+            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_BUY, mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "HouseBuyDialog");
+        });
+
+        binding.sellHouseButton.setOnClickListener(v -> {
+            List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsWithProperty();
+            if(list.size() == 0)
+            {
+                setToast("You have no houses/hotels to sell");
+                return;
+            }
+            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_SELL, mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "HouseSellDialog");
+        });
+
+        binding.tradeButtond.setOnClickListener(v -> {
+            tradeDialog dialog = new tradeDialog(mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "TradeDialog");
+
         });
 
         return binding.getRoot();

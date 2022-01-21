@@ -16,12 +16,16 @@
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_field_info.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_info.xml" value="0.5" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_jail.xml" value="0.5" />
-        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_newgame.xml" value="0.5" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_mortage.xml" value="0.33" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_mortage_pay.xml" value="0.5" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_newgame.xml" value="0.33" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_prompt.xml" value="0.5" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/dialog_trade.xml" value="0.33" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_game.xml" value="0.33" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_history.xml" value="0.5544554455445545" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_options.xml" value="0.5544554455445545" />
         <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/fragment_start.xml" value="0.33" />
+        <entry key="..\:/Users/neman/Desktop/PMUProjekat/app/src/main/res/layout/view_trade_holder.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -32,4 +32,5 @@
     <string name="buy_property">Buy property</string>
     <string name="sell_nproperty">Sell\nproperty</string>
     <string name="close">Close</string>
+    <string name="money2">Money</string>
 </resources>

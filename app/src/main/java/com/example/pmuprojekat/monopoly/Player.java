@@ -65,7 +65,7 @@ public class Player {
     }
 
     public boolean removeMoney(int amount) {
-        if ((currMoney - amount) <= 0)
+        if ((currMoney - amount) < 0)
             return false;
         addMoney(-amount);
         return true;
@@ -191,7 +191,7 @@ public class Player {
         List<BuyableField> list = new ArrayList<>();
 
         for (BuyableField field : owned) {
-            if (!field.canHaveHouse() || field.getHousesOwned() == 5)
+            if (!field.canHaveHouse() || field.getHousesOwned() == 5 || field.isMortgage())
                 continue;
             List<BuyableField> tmp = getAllSameTypeFields(field);
             int ownedNum = 0;
