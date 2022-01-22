@@ -12,6 +12,7 @@ import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.R;
 import com.example.pmuprojekat.databinding.FragmentStartBinding;
 import com.example.pmuprojekat.dialog.newGameDialog;
+import com.example.pmuprojekat.shake.LifeCycleGameObserver;
 
 
 public class startFragment extends Fragment {

@@ -28,6 +28,7 @@ import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.Field;
 import com.example.pmuprojekat.monopoly.Game;
 import com.example.pmuprojekat.monopoly.Player;
+import com.example.pmuprojekat.shake.LifeCycleGameObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class gameFragment extends Fragment {
     private List<ImageView> listImageView;
     private List<RelativeLayout> listRelativeLayouts;
     private List<PairReset> listResetPairs;
+    private LifeCycleGameObserver gameObserver;
 
 
     public gameFragment() {
@@ -73,7 +75,11 @@ public class gameFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainActivity = (MainActivity) requireActivity();
+        gameObserver = new LifeCycleGameObserver(mainActivity, this);
+        getLifecycle().addObserver(gameObserver);
     }
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -115,9 +121,17 @@ public class gameFragment extends Fragment {
             listImageView.get(i).setVisibility(View.VISIBLE);
 
         binding.rollButton.setOnClickListener(v -> {
-            binding.nextPlayerButton.setEnabled(true);
+            /*binding.nextPlayerButton.setEnabled(true);
             binding.rollButton.setEnabled(false);
-            Game.getInstance().rollDice();
+            Game.getInstance().rollDice();*/
+            binding.rollButton.setEnabled(false);
+            binding.infoButton.setEnabled(false);
+            binding.mortgageButton.setEnabled(false);
+            binding.payOffMortgage.setEnabled(false);
+            binding.buyHouseButton.setEnabled(false);
+            binding.sellHouseButton.setEnabled(false);
+            binding.tradeButtond.setEnabled(false);
+            gameObserver.startRoll();
         });
 
         binding.nextPlayerButton.setOnClickListener(v -> {
@@ -193,6 +207,18 @@ public class gameFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    public void rolled()
+    {
+        binding.nextPlayerButton.setEnabled(true);
+        binding.infoButton.setEnabled(true);
+        binding.mortgageButton.setEnabled(true);
+        binding.payOffMortgage.setEnabled(true);
+        binding.buyHouseButton.setEnabled(true);
+        binding.sellHouseButton.setEnabled(true);
+        binding.tradeButtond.setEnabled(true);
+        Game.getInstance().rollDice();
     }
 
     public void updatePlayers() {

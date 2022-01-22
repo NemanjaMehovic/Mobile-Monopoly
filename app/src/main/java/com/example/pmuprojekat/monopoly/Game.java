@@ -1,7 +1,9 @@
 package com.example.pmuprojekat.monopoly;
 
 import android.graphics.RadialGradient;
+import android.util.Log;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Fields.ChanceChestField;
@@ -101,14 +103,14 @@ public class Game {
                             utilityBuyableFields.add((UtilityBuyableField) tmp);
                             break;
                         default:
-                            System.out.println("Error unknown type of buyable.");
+                            Log.d(MainActivity.LOG_TAG, "Error unknown type of buyable.");
                             break;
                     }
                     fields.add(tmp);
                     buyableFields.add(tmp);
                     break;
                 default:
-                    System.out.println("Error unknown type.");
+                    Log.d(MainActivity.LOG_TAG, "Error unknown type.");
                     break;
             }
         }
@@ -167,7 +169,7 @@ public class Game {
         PropertyBuyableField property = propertyBuyableFields.get(propertyBuyableFields.size() - 1);
         property.setRentPrices(rentPricesForCollors.get(property.getType()).get("Expansive"));
         for (Field f : fields)
-            System.out.println(f);
+            Log.d(MainActivity.LOG_TAG, f.toString());
     }
 
     public List<Player> getPlayers() {
@@ -353,7 +355,7 @@ public class Game {
         p.removeMoney(price);
         p.addOwned(field);
         field.setOwner(p);
-        fragment.updateCurrData(p);
+        fragment.updateCurrData(currPlayer);
     }
 
     public void chanceChestCardGotten(String s, Boolean back) {

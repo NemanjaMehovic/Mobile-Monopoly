@@ -16,6 +16,7 @@ import com.example.pmuprojekat.monopoly.Game;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String LOG_TAG = "PMU_PROJECT_LOG";
     private static final String FRAGMENT_TAG = "MAIN_FRAGMENT";
     public static final int START_FRAGMENT = 0;
     public static final int GAME_FRAGMENT = 1;
