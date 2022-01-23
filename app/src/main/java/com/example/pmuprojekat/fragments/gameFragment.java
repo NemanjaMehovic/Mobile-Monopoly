@@ -22,6 +22,7 @@ import com.example.pmuprojekat.dialog.infoDialog;
 import com.example.pmuprojekat.dialog.jailDialog;
 import com.example.pmuprojekat.dialog.mortageDialog;
 import com.example.pmuprojekat.dialog.newGameDialog;
+import com.example.pmuprojekat.dialog.optionsDialog;
 import com.example.pmuprojekat.dialog.promptDialog;
 import com.example.pmuprojekat.dialog.tradeDialog;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
@@ -120,6 +121,12 @@ public class gameFragment extends Fragment {
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
             listImageView.get(i).setVisibility(View.VISIBLE);
 
+        setOnClickListeners();
+
+        return binding.getRoot();
+    }
+
+    private void setOnClickListeners(){
         binding.rollButton.setOnClickListener(v -> {
             /*binding.nextPlayerButton.setEnabled(true);
             binding.rollButton.setEnabled(false);
@@ -206,7 +213,11 @@ public class gameFragment extends Fragment {
 
         });
 
-        return binding.getRoot();
+        binding.infoOptiobsButton.setOnClickListener(v -> {
+            optionsDialog dialog = new optionsDialog(mainActivity);
+            dialog.setCancelable(false);
+            dialog.show(mainActivity.getSupportFragmentManager(), "OptionsDialog");
+        });
     }
 
     public void rolled()

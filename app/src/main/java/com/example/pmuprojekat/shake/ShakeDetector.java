@@ -12,8 +12,7 @@ import com.example.pmuprojekat.MainActivity;
 
 public class ShakeDetector implements SensorEventListener {
 
-    private static final double SHAKE_THRESHOLD_GRAVITY = 1.1;
-
+    private double SHAKE_THRESHOLD_GRAVITY = 1.1;
     private Context mContext;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -63,5 +62,9 @@ public class ShakeDetector implements SensorEventListener {
 
     public void setRegisterShake(boolean registerShake){
         this.registerShake = registerShake;
+    }
+
+    public void setSHAKE_THRESHOLD_GRAVITY(double SHAKE_THRESHOLD_GRAVITY) {
+        this.SHAKE_THRESHOLD_GRAVITY = SHAKE_THRESHOLD_GRAVITY;
     }
 }

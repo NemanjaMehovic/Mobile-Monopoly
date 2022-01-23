@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.optionsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Options Fragment" />
+        android:id="@+id/textViewOptions1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max wait time between shakes in seconds"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sliderTime"
+        android:layout_margin="@dimen/button_margin"/>
 
-</FrameLayout>
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stepSize="1"
+        android:valueFrom="1"
+        android:valueTo="10"
+        app:layout_constraintTop_toBottomOf="@id/textViewOptions1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textViewOptions2"
+        android:layout_margin="@dimen/button_margin"/>
+
+    <TextView
+        android:id="@+id/textViewOptions2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shake intensity needed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sliderTime"
+        app:layout_constraintBottom_toTopOf="@id/sliderWeight"
+        android:layout_margin="@dimen/button_margin"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="1.1"
+        android:valueTo="10"
+        app:layout_constraintTop_toBottomOf="@id/textViewOptions2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/optionsSet"
+        android:layout_margin="@dimen/button_margin"/>
+
+    <Button
+        android:id="@+id/optionsSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        app:layout_constraintTop_toBottomOf="@id/sliderWeight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

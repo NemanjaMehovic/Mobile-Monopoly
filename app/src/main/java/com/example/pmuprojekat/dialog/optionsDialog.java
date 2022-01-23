@@ -1,38 +1,30 @@
-package com.example.pmuprojekat.fragments;
+package com.example.pmuprojekat.dialog;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
 import com.example.pmuprojekat.MainActivity;
-import com.example.pmuprojekat.R;
-import com.example.pmuprojekat.databinding.FragmentGameBinding;
+import com.example.pmuprojekat.databinding.DialogFieldInfoBinding;
 import com.example.pmuprojekat.databinding.FragmentOptionsBinding;
 
-
-public class optionsFragment extends Fragment {
-
+public class optionsDialog extends DialogFragment {
 
     private FragmentOptionsBinding binding;
     private MainActivity mainActivity;
 
-    public optionsFragment() {
-        // Required empty public constructor
+    public optionsDialog(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mainActivity = (MainActivity) requireActivity();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentOptionsBinding.inflate(inflater, container, false);
 
         binding.sliderTime.setValue(mainActivity.waitTimeBetweenShakesInSec.getValue());
@@ -42,9 +34,10 @@ public class optionsFragment extends Fragment {
             int time = (int) binding.sliderTime.getValue();
             double shake = binding.sliderWeight.getValue();
             mainActivity.update(time, shake);
-            mainActivity.getSupportFragmentManager().popBackStack();
+            getDialog().dismiss();
         });
 
         return binding.getRoot();
     }
+
 }

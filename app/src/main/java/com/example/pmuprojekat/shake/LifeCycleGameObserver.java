@@ -46,12 +46,18 @@ public class LifeCycleGameObserver implements DefaultLifecycleObserver {
         }
 
         thread = new ShakeCheckerThread(this, player);
+        this.mainActivity.waitTimeBetweenShakesInSec.observe(fragment.getViewLifecycleOwner(), integer -> {
+            thread.setWaitTime(integer * 1000);
+        });
         thread.start();
     }
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
         Log.d(MainActivity.LOG_TAG, "RESUME");
+        this.mainActivity.shakeThreshold.observe(fragment.getViewLifecycleOwner(), aDouble -> {
+            detector.setSHAKE_THRESHOLD_GRAVITY(aDouble);
+        });
         detector.resume();
     }
 

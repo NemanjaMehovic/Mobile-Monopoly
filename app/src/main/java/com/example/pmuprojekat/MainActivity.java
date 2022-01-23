@@ -2,8 +2,12 @@ package com.example.pmuprojekat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.viewbinding.ViewBinding;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.pmuprojekat.databinding.ActivityMainBinding;
@@ -16,6 +20,9 @@ import com.example.pmuprojekat.monopoly.Game;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String SHARED_PREFERENCES_NAME = "PMU_PROJECT_PREFERENCES";
+    private static final String SHARED_PREFERENCES_WAIT_TIME = "PMU_PROJECT_PREFERENCES_TIME";
+    private static final String SHARED_PREFERENCES_THRESHOLD = "PMU_PROJECT_PREFERENCES_THRESHOLD";
     public static final String LOG_TAG = "PMU_PROJECT_LOG";
     private static final String FRAGMENT_TAG = "MAIN_FRAGMENT";
     public static final int START_FRAGMENT = 0;
@@ -28,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
             new historyFragment()};
 
     private ActivityMainBinding binding;
+    public MutableLiveData<Integer> waitTimeBetweenShakesInSec;
+    public MutableLiveData<Double> shakeThreshold;
+    private SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -39,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
                     .beginTransaction()
                     .add(R.id.mainContentFrame, new startFragment(), FRAGMENT_TAG)
                     .commit();
+
+        waitTimeBetweenShakesInSec = new MutableLiveData<>();
+        shakeThreshold = new MutableLiveData<>();
+
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+        waitTimeBetweenShakesInSec.setValue(sharedPreferences.getInt(SHARED_PREFERENCES_WAIT_TIME, 3));
+        shakeThreshold.setValue((double) sharedPreferences.getFloat(SHARED_PREFERENCES_THRESHOLD, 1.1f));
 
         setContentView(binding.getRoot());
     }
@@ -65,5 +84,15 @@ public class MainActivity extends AppCompatActivity {
         String[] chestCards = getResources().getStringArray(R.array.chestCards);
 
         ChanceChestField.initChanceChest(chanceCards, chestCards);
+    }
+
+    public void update(int time, double shake)
+    {
+        waitTimeBetweenShakesInSec.setValue(time);
+        shakeThreshold.setValue(shake);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SHARED_PREFERENCES_WAIT_TIME, time);
+        editor.putFloat(SHARED_PREFERENCES_THRESHOLD, (float) shake);
+        editor.commit();
     }
 }
