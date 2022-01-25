@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,7 +23,6 @@ import com.example.pmuprojekat.dialog.fieldInfoDialog;
 import com.example.pmuprojekat.dialog.infoDialog;
 import com.example.pmuprojekat.dialog.jailDialog;
 import com.example.pmuprojekat.dialog.mortageDialog;
-import com.example.pmuprojekat.dialog.newGameDialog;
 import com.example.pmuprojekat.dialog.optionsDialog;
 import com.example.pmuprojekat.dialog.promptDialog;
 import com.example.pmuprojekat.dialog.tradeDialog;
@@ -68,6 +68,9 @@ public class gameFragment extends Fragment {
     private List<PairReset> listResetPairs;
     private LifeCycleGameObserver gameObserver;
 
+    public DialogFragment dialog;
+    public static boolean buyDialogWasActive;
+    public static boolean auctionDialogWasActive;
 
     public gameFragment() {
         // Required empty public constructor
@@ -82,11 +85,13 @@ public class gameFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
+        dialog = null;
+        buyDialogWasActive = false;
+        auctionDialogWasActive = false;
         Game.getInstance().setFragment(this);
 
 
@@ -94,7 +99,7 @@ public class gameFragment extends Fragment {
         dirs = new ArrayList<>();
         listResetPairs = new ArrayList<>();
 
-        if(Game.getInstance().getPlayers().size() == 0)
+        if (Game.getInstance().getPlayers().size() == 0)
             MainActivity.repository.loadGameFromDataBase();
 
 
@@ -125,7 +130,7 @@ public class gameFragment extends Fragment {
         listRelativeLayouts.add(binding.player8Layout);
 
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
-            if(!Game.getInstance().getPlayers().get(i).isLost())
+            if (!Game.getInstance().getPlayers().get(i).isLost())
                 listImageView.get(i).setVisibility(View.VISIBLE);
 
         setOnClickListeners();
@@ -137,16 +142,37 @@ public class gameFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void gameLoadPositions(){
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(dialog != null)
+            dialog.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Player p = Game.getInstance().getCurrPlayer();
+        if(buyDialogWasActive){
+            BuyableField f = (BuyableField) Game.getInstance().getFields().get(p.getPosition());
+            Game.getInstance().offerToBuy(p, f);
+        }
+        else if(auctionDialogWasActive){
+            BuyableField f = (BuyableField) Game.getInstance().getFields().get(p.getPosition());
+            startAuction(f);
+        }
+
+    }
+
+    private void gameLoadPositions() {
         Game game = Game.getInstance();
         Player trueCurrPlayer = game.getCurrPlayer();
         int trueCurrPlayerNumber = game.getCurrPlayerNum();
         List<Player> players = game.getPlayers();
 
-        for(int i = 0; i < players.size(); i++)
-        {
+        for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
-            if(p.isLost())
+            if (p.isLost())
                 continue;
             game.setCurrPlayer(p);
             game.setCurrPlayerNum(i);
@@ -157,15 +183,16 @@ public class gameFragment extends Fragment {
         game.setCurrPlayerNum(trueCurrPlayerNumber);
 
         jailOptions();
+        updateCurrData(trueCurrPlayer);
 
-        if(game.getFields().get(trueCurrPlayer.getPosition()) instanceof BuyableField) {
-            BuyableField field= (BuyableField) game.getFields().get(trueCurrPlayer.getPosition());
+        if (game.getFields().get(trueCurrPlayer.getPosition()) instanceof BuyableField) {
+            BuyableField field = (BuyableField) game.getFields().get(trueCurrPlayer.getPosition());
             if (field.getOwner() == null)
                 game.offerToBuy(trueCurrPlayer, field);
         }
     }
 
-    private void setOnClickListeners(){
+    private void setOnClickListeners() {
         binding.rollButton.setOnClickListener(v -> {
             binding.rollButton.setEnabled(false);
             binding.infoButton.setEnabled(false);
@@ -183,81 +210,76 @@ public class gameFragment extends Fragment {
         });
 
         binding.jailOptionsButton.setOnClickListener(v -> {
-            jailDialog dialog = new jailDialog();
+            dialog = new jailDialog();
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "JailOptions");
         });
 
         binding.infoButton.setOnClickListener(v -> {
-            fieldInfoDialog dialog = new fieldInfoDialog(mainActivity);
+            dialog = new fieldInfoDialog(mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "FieldInfo");
         });
 
         binding.mortgageButton.setOnClickListener(v -> {
             List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsThatCanBeMortgaged();
-            if(list.size() == 0)
-            {
+            if (list.size() == 0) {
                 setToast("You have nothing that can be mortgaged");
                 return;
             }
-            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE, mainActivity);
+            dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE, mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "MortgageDialog");
         });
 
         binding.payOffMortgage.setOnClickListener(v -> {
             List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllMortgagedFields();
-            if(list.size() == 0)
-            {
+            if (list.size() == 0) {
                 setToast("You have nothing that is mortgaged");
                 return;
             }
-            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE_PAY, mainActivity);
+            dialog = new mortageDialog(list, mortageDialog.dialogType.MORTAGE_PAY, mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "MortgagePayDialog");
         });
 
         binding.buyHouseButton.setOnClickListener(v -> {
             List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsThatCanHaveAProperty();
-            if(list.size() == 0)
-            {
+            if (list.size() == 0) {
                 setToast("You have nothing that can buy a house/hotel");
                 return;
             }
-            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_BUY, mainActivity);
+            dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_BUY, mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "HouseBuyDialog");
         });
 
         binding.sellHouseButton.setOnClickListener(v -> {
             List<BuyableField> list = Game.getInstance().getCurrPlayer().getAllFieldsWithProperty();
-            if(list.size() == 0)
-            {
+            if (list.size() == 0) {
                 setToast("You have no houses/hotels to sell");
                 return;
             }
-            mortageDialog dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_SELL, mainActivity);
+            dialog = new mortageDialog(list, mortageDialog.dialogType.HOUSE_SELL, mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "HouseSellDialog");
         });
 
         binding.tradeButtond.setOnClickListener(v -> {
-            tradeDialog dialog = new tradeDialog(mainActivity);
+            dialog = new tradeDialog(mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "TradeDialog");
 
         });
 
         binding.infoOptiobsButton.setOnClickListener(v -> {
-            optionsDialog dialog = new optionsDialog(mainActivity);
+            dialog = new optionsDialog(mainActivity);
             dialog.setCancelable(false);
             dialog.show(mainActivity.getSupportFragmentManager(), "OptionsDialog");
         });
     }
 
-    public void rolled()
-    {
+    public void rolled() {
         binding.nextPlayerButton.setEnabled(true);
         binding.infoButton.setEnabled(true);
         binding.mortgageButton.setEnabled(true);
@@ -522,7 +544,7 @@ public class gameFragment extends Fragment {
             else
                 for (int i = 0; i < rentPrices.size(); i++) {
                     rent.append(rentPrices.get(i));
-                    if(i != (rentPrices.size() - 1))
+                    if (i != (rentPrices.size() - 1))
                         rent.append(", ");
                 }
         }
@@ -530,19 +552,19 @@ public class gameFragment extends Fragment {
     }
 
     public void setPromptDialog(promptDialog.Callback accept, promptDialog.Callback cancel, String info) {
-        promptDialog dialog = new promptDialog(accept, cancel, info);
+        dialog = new promptDialog(accept, cancel, info);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Prompt");
     }
 
     public void setInfoDIalog(promptDialog.Callback accept, String info) {
-        infoDialog dialog = new infoDialog(accept, info);
+        dialog = new infoDialog(accept, info);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Info");
     }
 
     public void startAuction(BuyableField field) {
-        auctionDialog dialog = new auctionDialog(mainActivity, field);
+        dialog = new auctionDialog(mainActivity, field);
         dialog.setCancelable(false);
         dialog.show(mainActivity.getSupportFragmentManager(), "Auction");
     }
@@ -559,6 +581,8 @@ public class gameFragment extends Fragment {
     }
 
     public void finishedGame() {
-        mainActivity.getSupportFragmentManager().popBackStack();
+        Log.d(MainActivity.LOG_TAG, "Num on back stack before pop " + mainActivity.getSupportFragmentManager().getBackStackEntryCount());
+        mainActivity.getSupportFragmentManager().popBackStackImmediate();
+        Log.d(MainActivity.LOG_TAG, "Num on back stack after pop " + mainActivity.getSupportFragmentManager().getBackStackEntryCount());
     }
 }

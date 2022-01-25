@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.databinding.DialogNewgameBinding;
+import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.monopoly.Fields.BuyableField;
 import com.example.pmuprojekat.monopoly.Game;
 import com.example.pmuprojekat.monopoly.Player;
@@ -88,6 +89,7 @@ public class auctionDialog extends DialogFragment {
                 {
                     if(winner.getCurrMoney() > max) {
                         Game.getInstance().boughtField(winner, field, max);
+                        gameFragment.auctionDialogWasActive = false;
                         getDialog().dismiss();
                     }
                     else

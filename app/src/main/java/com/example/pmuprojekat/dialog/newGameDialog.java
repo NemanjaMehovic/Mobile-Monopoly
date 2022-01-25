@@ -49,6 +49,7 @@ public class newGameDialog extends DialogFragment {
                 if (!s.equals(""))
                     list.add(new Player(s));
             if (list.size() >= 2) {
+                mainActivity.resetGame();
                 Game.getInstance().setPlayers(list);
                 MainActivity.repository.deleteActiveGame();
                 MainActivity.repository.startNewGame();

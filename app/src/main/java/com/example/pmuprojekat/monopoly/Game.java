@@ -337,6 +337,7 @@ public class Game {
 
     public void offerToBuy(Player p, BuyableField field) {
         String info = "Do you wish to buy " + field.getName() + " for $" + field.getPrice();
+        gameFragment.buyDialogWasActive = true;
         fragment.setPromptDialog(() -> {
             acceptedToBuy(p, field);
         }, () -> {
@@ -345,6 +346,7 @@ public class Game {
     }
 
     private void acceptedToBuy(Player p, BuyableField field) {
+        gameFragment.buyDialogWasActive = false;
         if (p.getCurrMoney() >= field.getPrice()) {
             boughtField(p, field, field.getPrice());
         } else
@@ -352,6 +354,8 @@ public class Game {
     }
 
     private void startAuction(BuyableField field) {
+        gameFragment.auctionDialogWasActive = true;
+        gameFragment.buyDialogWasActive = false;
         fragment.startAuction(field);
     }
 

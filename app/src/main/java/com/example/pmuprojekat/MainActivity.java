@@ -9,6 +9,7 @@ import androidx.viewbinding.ViewBinding;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.pmuprojekat.database.GameRepository;
 import com.example.pmuprojekat.databinding.ActivityMainBinding;
@@ -42,14 +43,13 @@ public class MainActivity extends AppCompatActivity {
     public static GameRepository repository;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         repository = new GameRepository(this);
         resetGame();
-        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.mainContentFrame, new startFragment(), FRAGMENT_TAG)
@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    public void switchFragment(Fragment fragment)
-    {
+    public void switchFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.mainContentFrame, fragment, FRAGMENT_TAG)
@@ -75,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void resetGame()
-    {
+    public void resetGame() {
         String[] cardNames = getResources().getStringArray(R.array.cardName);
         int[] cardCosts = getResources().getIntArray(R.array.cardCost);
         String[] cardTypes = getResources().getStringArray(R.array.cardType);
@@ -90,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
         ChanceChestField.initChanceChest(chanceCards, chestCards);
     }
 
-    public void update(int time, double shake)
-    {
+    public void update(int time, double shake) {
         waitTimeBetweenShakesInSec.setValue(time);
         shakeThreshold.setValue(shake);
         SharedPreferences.Editor editor = sharedPreferences.edit();

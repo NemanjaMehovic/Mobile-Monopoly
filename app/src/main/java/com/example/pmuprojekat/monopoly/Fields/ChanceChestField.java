@@ -123,7 +123,7 @@ public class ChanceChestField extends Field {
                 for (Player p1 : Game.getInstance().getPlayers())
                     if (p1 != p) {
                         if (!p1.removeMoney(amountCollect))
-                            Game.getInstance().notEnoughMoney(p, amountCollect);
+                            Game.getInstance().notEnoughMoney(p1, amountCollect);
                         sumCollect += amountCollect;
                     }
                 p.addMoney(sumCollect);
