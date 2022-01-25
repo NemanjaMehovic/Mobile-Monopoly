@@ -28,4 +28,7 @@ public interface PlayerDao {
 
     @Query("Delete from PlayerEntity Where gameId = :id ")
     void deleteAllPlayersFromGame(long id);
+
+    @Query("Select * from PlayerEntity where gameId = :id and lost = 0 limit 1")
+    PlayerEntity getGameWinner(long id);
 }

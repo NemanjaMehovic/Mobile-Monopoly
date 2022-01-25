@@ -2,6 +2,7 @@ package com.example.pmuprojekat.monopoly.Fields;
 
 import androidx.annotation.NonNull;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.monopoly.Game;
 import com.example.pmuprojekat.monopoly.Player;
 
@@ -16,6 +17,7 @@ public class TaxField extends Field {
 
     @Override
     public void effect(Player p) {
+        MainActivity.repository.newAction("INFO-" + p.getPlayerName() + " had to pay taxes");
         if (!p.removeMoney(taxNum))
             Game.getInstance().notEnoughMoney(p, taxNum);
     }

@@ -235,10 +235,15 @@ public class Game {
         int dice1 = random.nextInt(6) + 1;
         int dice2 = random.nextInt(6) + 1;
 
+        MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " rolled " + dice1 + " and " + dice2);
+
         currPlayer.setNumRolled(dice1 + dice2);
         int startingPosition = currPlayer.getPosition();
         currPlayer.move(dice1 + dice2);
         int positionAfterDiceRoll = currPlayer.getPosition();
+
+        MainActivity.repository.newAction("MOVE-" + currPlayerNum + "-" + positionAfterDiceRoll);
+
         if (positionAfterDiceRoll < startingPosition)
             currPlayer.addMoney(200);
 
@@ -247,6 +252,7 @@ public class Game {
 
         int positionAfterEffect = currPlayer.getPosition();
         if (positionAfterEffect != positionAfterDiceRoll) {
+            MainActivity.repository.newAction("MOVE-" + currPlayerNum + "-" + positionAfterEffect);
             int tmpPosition = positionAfterDiceRoll;
             int i = 0;
             while (tmpPosition != positionAfterEffect) {
@@ -270,6 +276,7 @@ public class Game {
 
     public void notEnoughMoney(Player p, int needed) {
         p.setLost(true);
+        MainActivity.repository.newAction("BANKRUPT-" + players.indexOf(p));
         if (currPlayer != p)
             takeEverything(currPlayer, p);
         else {
@@ -310,6 +317,7 @@ public class Game {
             }
         if (flag == 1) {
             gameFinished = true;
+            MainActivity.repository.newAction("WINNER-" + possibleWinner.getPlayerName());
             MainActivity.repository.update();
             fragment.setInfoDIalog(() -> {
                 fragment.finishedGame();
@@ -364,12 +372,14 @@ public class Game {
         p.addOwned(field);
         field.setOwner(p);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.newAction("INFO-" + p.getPlayerName() + " bought " + field.getName());
         MainActivity.repository.update();
     }
 
     public void chanceChestCardGotten(String s, Boolean back) {
         this.back = back;
         fragment.setToast(s);
+        MainActivity.repository.newAction("INFO-" + s);
     }
 
     public void buyHouse(BuyableField field) {
@@ -379,10 +389,12 @@ public class Game {
             numOfHousesLeft += 4;
             field.setHousesOwned(5);
             currPlayer.removeMoney(field.getHouseHotelPrice());
+            MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " bought a hotel for " + field.getName());
         } else if (numOfHousesLeft > 0 && field.getHousesOwned() < 4) {
             numOfHousesLeft--;
             field.setHousesOwned(field.getHousesOwned() + 1);
             currPlayer.removeMoney(field.getHouseHotelPrice());
+            MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " bought a house for " + field.getName());
         }
         fragment.updateCurrData(currPlayer);
         MainActivity.repository.update();
@@ -394,10 +406,12 @@ public class Game {
             numOfHotelsLeft++;
             field.setHousesOwned(4);
             currPlayer.addMoney(field.getHouseHotelPrice() / 2);
+            MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " sold a hotel from " + field.getName());
         } else if (field.getHousesOwned() > 0 && field.getHousesOwned() < 5) {
             numOfHousesLeft++;
             field.setHousesOwned(field.getHousesOwned() - 1);
             currPlayer.addMoney(field.getHouseHotelPrice() / 2);
+            MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " sold a house from " + field.getName());
         }
         fragment.updateCurrData(currPlayer);
         MainActivity.repository.update();
@@ -407,6 +421,7 @@ public class Game {
         field.setMortgage(true);
         currPlayer.addMoney(field.getPrice() / 2);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " mortaged " + field.getName());
         MainActivity.repository.update();
     }
 
@@ -414,6 +429,7 @@ public class Game {
         field.setMortgage(false);
         currPlayer.removeMoney((int) (field.getPrice() / 2 * 1.1));
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " paid off mortage of " + field.getName());
         MainActivity.repository.update();
     }
 
@@ -435,6 +451,7 @@ public class Game {
         p.removeMoney(receiveMoney);
         p.addMoney(offerMoney);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " traded with " + p.getPlayerName());
         MainActivity.repository.update();
     }
 

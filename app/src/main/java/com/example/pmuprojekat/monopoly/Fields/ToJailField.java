@@ -1,5 +1,6 @@
 package com.example.pmuprojekat.monopoly.Fields;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.monopoly.Game;
 import com.example.pmuprojekat.monopoly.Player;
 
@@ -22,5 +23,6 @@ public class ToJailField extends Field {
                 break;
             }
         p.setPosition(position);
+        MainActivity.repository.newAction("INFO-" + p.getPlayerName() + " went to jail");
     }
 }

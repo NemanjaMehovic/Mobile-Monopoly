@@ -1,5 +1,6 @@
 package com.example.pmuprojekat.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.RoomDatabase;
 
 import com.example.pmuprojekat.MainActivity;
@@ -148,7 +149,8 @@ public class GameRepository {
     }
 
     public void newAction(String s){
-
+        ActionEntity actionEntity = new ActionEntity(0, game.getId(), s);
+        MonopolyDatabase.getInstance(mainActivity).actionDao().insert(actionEntity);
     }
 
     public void setTime(long time){
@@ -176,5 +178,23 @@ public class GameRepository {
             }
         }
         return buyablaFields.append("/").append(houses).append("/").append(mortage).toString().split("/");
+    }
+
+    public void deleteAllFinishedGames(){
+        List<GameEntity> gameEntities = MonopolyDatabase.getInstance(mainActivity).gameDao().getAllFinishedGames();
+        MonopolyDatabase.getInstance(mainActivity).gameDao().deleteAllFinishedGames();
+        for(GameEntity gameEntity:gameEntities)
+        {
+            MonopolyDatabase.getInstance(mainActivity).playerDao().deleteAllPlayersFromGame(gameEntity.getId());
+            MonopolyDatabase.getInstance(mainActivity).actionDao().deleteAllActionsFromGame(gameEntity.getId());
+        }
+    }
+
+    public PlayerEntity getWinner(long id){
+        return MonopolyDatabase.getInstance(mainActivity).playerDao().getGameWinner(id);
+    }
+
+    public LiveData<List<GameEntity>> getAllFinishedGamesLive(){
+        return MonopolyDatabase.getInstance(mainActivity).gameDao().getAllFinishedGamesLive();
     }
 }
