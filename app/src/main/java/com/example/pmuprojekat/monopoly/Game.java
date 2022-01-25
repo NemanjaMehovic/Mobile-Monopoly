@@ -64,6 +64,7 @@ public class Game {
         back = false;
         fields = new ArrayList<>();
         buyableFields = new ArrayList<>();
+        players = new ArrayList<>();
         List<PropertyBuyableField> propertyBuyableFields = new ArrayList<>();
         List<RailroadBuyableField> railroadBuyableFields = new ArrayList<>();
         List<UtilityBuyableField> utilityBuyableFields = new ArrayList<>();
@@ -264,6 +265,7 @@ public class Game {
         else
             fragment.jailOptions();
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void notEnoughMoney(Player p, int needed) {
@@ -298,6 +300,7 @@ public class Game {
         }
         fragment.updatePlayers();
         fragment.setToast("Player " + p.getPlayerName() + " went bankrupt");
+        MainActivity.repository.update();
         int flag = 0;
         Player possibleWinner = null;
         for (Player player : players)
@@ -307,6 +310,7 @@ public class Game {
             }
         if (flag == 1) {
             gameFinished = true;
+            MainActivity.repository.update();
             fragment.setInfoDIalog(() -> {
                 fragment.finishedGame();
             }, "Winner is " + possibleWinner.getPlayerName());
@@ -356,6 +360,7 @@ public class Game {
         p.addOwned(field);
         field.setOwner(p);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void chanceChestCardGotten(String s, Boolean back) {
@@ -376,6 +381,7 @@ public class Game {
             currPlayer.removeMoney(field.getHouseHotelPrice());
         }
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void sellHouse(BuyableField field) {
@@ -390,18 +396,21 @@ public class Game {
             currPlayer.addMoney(field.getHouseHotelPrice() / 2);
         }
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void mortageField(BuyableField field) {
         field.setMortgage(true);
         currPlayer.addMoney(field.getPrice() / 2);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void payOffMortage(BuyableField field) {
         field.setMortgage(false);
         currPlayer.removeMoney((int) (field.getPrice() / 2 * 1.1));
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void trade(Player p, List<BuyableField> offerFields, int offerMoney, List<BuyableField> receiveFields, int receiveMoney) {
@@ -422,9 +431,26 @@ public class Game {
         p.removeMoney(receiveMoney);
         p.addMoney(offerMoney);
         fragment.updateCurrData(currPlayer);
+        MainActivity.repository.update();
     }
 
     public void playerJailUpdate() {
         fragment.jailOptions();
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
+    }
+
+    public void setCurrPlayer(Player currPlayer) {
+        this.currPlayer = currPlayer;
+    }
+
+    public void setCurrPlayerNum(int currPlayerNum) {
+        this.currPlayerNum = currPlayerNum;
+    }
+
+    public void setAlreadyRolled(boolean alreadyRolled) {
+        this.alreadyRolled = alreadyRolled;
     }
 }

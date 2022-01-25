@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.pmuprojekat.database.GameRepository;
 import com.example.pmuprojekat.databinding.ActivityMainBinding;
 import com.example.pmuprojekat.fragments.gameFragment;
 import com.example.pmuprojekat.fragments.historyFragment;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public MutableLiveData<Integer> waitTimeBetweenShakesInSec;
     public MutableLiveData<Double> shakeThreshold;
     private SharedPreferences sharedPreferences;
+    public static GameRepository repository;
 
 
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        repository = new GameRepository(this);
+        resetGame();
         if(getSupportFragmentManager().getBackStackEntryCount() == 0)
             getSupportFragmentManager()
                     .beginTransaction()

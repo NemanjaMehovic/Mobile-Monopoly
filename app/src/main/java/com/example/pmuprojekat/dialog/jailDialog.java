@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.databinding.DialogJailBinding;
 import com.example.pmuprojekat.monopoly.Fields.ChanceChestField;
 import com.example.pmuprojekat.monopoly.Game;
@@ -41,6 +42,7 @@ public class jailDialog extends DialogFragment {
             }
             currPlayer.setJailTime(0);
             Game.getInstance().playerJailUpdate();
+            MainActivity.repository.update();
             getDialog().dismiss();
         });
 
@@ -50,6 +52,7 @@ public class jailDialog extends DialogFragment {
             currPlayer.removeMoney(50);
             currPlayer.setJailTime(0);
             Game.getInstance().playerJailUpdate();
+            MainActivity.repository.update();
             getDialog().dismiss();
         });
 

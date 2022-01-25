@@ -21,6 +21,8 @@ public class LifeCycleGameObserver implements DefaultLifecycleObserver {
     private ShakeCheckerThread thread;
     private boolean rolling = false;
     private MediaPlayer player;
+    private long timeStart;
+    private long timeEnd;
 
     public LifeCycleGameObserver(MainActivity mainActivity, gameFragment fragment) {
         this.mainActivity = mainActivity;
@@ -58,12 +60,15 @@ public class LifeCycleGameObserver implements DefaultLifecycleObserver {
         this.mainActivity.shakeThreshold.observe(fragment.getViewLifecycleOwner(), aDouble -> {
             detector.setSHAKE_THRESHOLD_GRAVITY(aDouble);
         });
+        timeStart = System.currentTimeMillis();
         detector.resume();
     }
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
         Log.d(MainActivity.LOG_TAG, "PAUSE");
+        timeEnd = System.currentTimeMillis();
+        mainActivity.repository.setTime(timeEnd - timeStart);
         detector.pause();
     }
 

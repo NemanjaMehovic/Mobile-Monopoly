@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,9 +89,14 @@ public class gameFragment extends Fragment {
         binding = FragmentGameBinding.inflate(inflater, container, false);
         Game.getInstance().setFragment(this);
 
+
         stepCounts = new ArrayList<>();
         dirs = new ArrayList<>();
         listResetPairs = new ArrayList<>();
+
+        if(Game.getInstance().getPlayers().size() == 0)
+            MainActivity.repository.loadGameFromDataBase();
+
 
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++) {
             stepCounts.add(0);
@@ -119,18 +125,48 @@ public class gameFragment extends Fragment {
         listRelativeLayouts.add(binding.player8Layout);
 
         for (int i = 0; i < Game.getInstance().getPlayers().size(); i++)
-            listImageView.get(i).setVisibility(View.VISIBLE);
+            if(!Game.getInstance().getPlayers().get(i).isLost())
+                listImageView.get(i).setVisibility(View.VISIBLE);
 
         setOnClickListeners();
+
+        binding.getRoot().post(() -> {
+            gameLoadPositions();
+        });
 
         return binding.getRoot();
     }
 
+    private void gameLoadPositions(){
+        Game game = Game.getInstance();
+        Player trueCurrPlayer = game.getCurrPlayer();
+        int trueCurrPlayerNumber = game.getCurrPlayerNum();
+        List<Player> players = game.getPlayers();
+
+        for(int i = 0; i < players.size(); i++)
+        {
+            Player p = players.get(i);
+            if(p.isLost())
+                continue;
+            game.setCurrPlayer(p);
+            game.setCurrPlayerNum(i);
+            movePlayer(p.getPosition(), 0);
+        }
+
+        game.setCurrPlayer(trueCurrPlayer);
+        game.setCurrPlayerNum(trueCurrPlayerNumber);
+
+        jailOptions();
+
+        if(game.getFields().get(trueCurrPlayer.getPosition()) instanceof BuyableField) {
+            BuyableField field= (BuyableField) game.getFields().get(trueCurrPlayer.getPosition());
+            if (field.getOwner() == null)
+                game.offerToBuy(trueCurrPlayer, field);
+        }
+    }
+
     private void setOnClickListeners(){
         binding.rollButton.setOnClickListener(v -> {
-            /*binding.nextPlayerButton.setEnabled(true);
-            binding.rollButton.setEnabled(false);
-            Game.getInstance().rollDice();*/
             binding.rollButton.setEnabled(false);
             binding.infoButton.setEnabled(false);
             binding.mortgageButton.setEnabled(false);

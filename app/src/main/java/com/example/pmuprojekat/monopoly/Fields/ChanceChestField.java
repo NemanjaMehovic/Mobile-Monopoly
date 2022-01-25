@@ -158,4 +158,12 @@ public class ChanceChestField extends Field {
     public ChanceChestType getType() {
         return type;
     }
+
+    public static List<String> getChances() {
+        return Chances;
+    }
+
+    public static List<String> getChests() {
+        return Chests;
+    }
 }

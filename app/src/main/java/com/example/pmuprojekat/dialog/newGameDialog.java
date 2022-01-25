@@ -50,6 +50,8 @@ public class newGameDialog extends DialogFragment {
                     list.add(new Player(s));
             if (list.size() >= 2) {
                 Game.getInstance().setPlayers(list);
+                MainActivity.repository.deleteActiveGame();
+                MainActivity.repository.startNewGame();
                 mainActivity.switchFragment(MainActivity.FRAGMENTS[MainActivity.GAME_FRAGMENT]);
             } else
                 Toast.makeText(mainActivity, "Minimum two players needed!", Toast.LENGTH_SHORT).show();
