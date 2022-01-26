@@ -197,4 +197,12 @@ public class GameRepository {
     public LiveData<List<GameEntity>> getAllFinishedGamesLive(){
         return MonopolyDatabase.getInstance(mainActivity).gameDao().getAllFinishedGamesLive();
     }
+
+    public List<PlayerEntity> getALlPlayersFromGame(GameEntity game){
+        return MonopolyDatabase.getInstance(mainActivity).playerDao().getAllPlayersFromGame(game.getId());
+    }
+
+    public List<ActionEntity> getAllActionsFromGame(GameEntity game){
+        return MonopolyDatabase.getInstance(mainActivity).actionDao().getAllActionsFromGame(game.getId());
+    }
 }

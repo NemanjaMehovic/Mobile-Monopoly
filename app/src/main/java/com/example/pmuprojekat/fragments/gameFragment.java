@@ -38,14 +38,14 @@ import java.util.List;
 
 public class gameFragment extends Fragment {
 
-    private enum MoveDir {
+    public enum MoveDir {
         LEFT,
         UP,
         RIGHT,
         DOWN
     }
 
-    private class PairReset {
+    public static class PairReset {
         public boolean resetWidth;
         public boolean resetHeight;
 

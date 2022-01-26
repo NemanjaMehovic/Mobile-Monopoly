@@ -10,6 +10,7 @@ import com.example.pmuprojekat.MainActivity;
 import com.example.pmuprojekat.database.GameEntity;
 import com.example.pmuprojekat.database.PlayerEntity;
 import com.example.pmuprojekat.databinding.ViewHistoryHolderBinding;
+import com.example.pmuprojekat.fragments.historyReplayFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,11 @@ import java.util.List;
 public class HistoryRecycleViewAdapter extends RecyclerView.Adapter<HistoryRecycleViewAdapter.HistoryViewHolder> {
 
     private List<GameEntity> games;
+    private MainActivity mainActivity;
 
-    public HistoryRecycleViewAdapter() {
+    public HistoryRecycleViewAdapter(MainActivity mainActivity) {
         this.games = new ArrayList<>();
+        this.mainActivity = mainActivity;
     }
 
     public void setGames(List<GameEntity> gameEntities) {
@@ -59,6 +62,11 @@ public class HistoryRecycleViewAdapter extends RecyclerView.Adapter<HistoryRecyc
         public HistoryViewHolder(@NonNull ViewHistoryHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.binding.playReplayButton.setOnClickListener(v -> {
+                historyReplayFragment fragment = new historyReplayFragment();
+                fragment.setGameEntity(entity);
+                mainActivity.switchFragment(fragment);
+            });
         }
 
         public void setEntity(GameEntity gameEntity) {

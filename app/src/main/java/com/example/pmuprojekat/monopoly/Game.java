@@ -235,7 +235,7 @@ public class Game {
         int dice1 = random.nextInt(6) + 1;
         int dice2 = random.nextInt(6) + 1;
 
-        MainActivity.repository.newAction("INFO-" + currPlayer.getPlayerName() + " rolled " + dice1 + " and " + dice2);
+        MainActivity.repository.newAction("ROLLED-" + currPlayer.getPlayerName() + " rolled " + dice1 + " and " + dice2);
 
         currPlayer.setNumRolled(dice1 + dice2);
         int startingPosition = currPlayer.getPosition();

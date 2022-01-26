@@ -43,7 +43,7 @@ public class historyFragment extends Fragment {
         });
 
 
-        recycleView = new HistoryRecycleViewAdapter();
+        recycleView = new HistoryRecycleViewAdapter(mainActivity);
         binding.recyclerViewHistory.setHasFixedSize(true);
         binding.recyclerViewHistory.setAdapter(recycleView);
         binding.recyclerViewHistory.setLayoutManager(new LinearLayoutManager(mainActivity));

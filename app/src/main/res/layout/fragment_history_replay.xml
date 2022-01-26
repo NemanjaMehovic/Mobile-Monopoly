@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.historyReplayFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/replayInfoTab"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+        <TextView
+            android:id="@+id/replayInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/replayInfoTab">
+
+
+        <Button
+            android:id="@+id/playReplayButtonGame"
+            android:layout_width="@dimen/game_button_width"
+            android:layout_height="@dimen/game_button_height"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/button_margin"
+            android:text="Play"
+            android:textSize="@dimen/game_button_text_size" />
+
+        <ImageView
+            android:id="@+id/boardReplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/monopoly_board" />
+
+        <RelativeLayout
+            android:id="@+id/player1LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true">
+
+            <ImageView
+                android:id="@+id/player1PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_adb_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player2LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:id="@+id/player2PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_bookmark_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player3LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp">
+
+            <ImageView
+                android:id="@+id/player3PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_favorite_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player4LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp">
+
+            <ImageView
+                android:id="@+id/player4PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_hourglass_full_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player5LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp">
+
+            <ImageView
+                android:id="@+id/player5PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_two_wheeler_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player6LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="30dp">
+
+            <ImageView
+                android:id="@+id/player6PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_pets_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player7LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="45dp">
+
+            <ImageView
+                android:id="@+id/player7PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_star_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/player8LayoutReplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="45dp">
+
+            <ImageView
+                android:id="@+id/player8PictureReplay"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/outline_work_white_48"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
