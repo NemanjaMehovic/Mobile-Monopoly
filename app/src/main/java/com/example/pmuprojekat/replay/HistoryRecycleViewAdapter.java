@@ -78,7 +78,9 @@ public class HistoryRecycleViewAdapter extends RecyclerView.Adapter<HistoryRecyc
             long mili = entity.getGameLength();
             long s = (mili / 1000) % 60;
             long min = (mili / 1000) / 60;
-            binding.gameLengthTextView.setText("Game length: " + String.format("%02d:%02d", min, s));
+            String tmp = entity.getStartDate();
+            tmp  += System.lineSeparator() + "Game length: " + String.format("%02d:%02d", min, s);
+            binding.gameLengthTextView.setText(tmp);
         }
     }
 }

@@ -13,7 +13,7 @@ public abstract class MonopolyDatabase extends RoomDatabase {
     public abstract ActionDao actionDao();
     public abstract PlayerDao playerDao();
 
-    private static final String DATABASE_NAME = "monopoly-app.db";
+    private static final String DATABASE_NAME = "monopoly2-app.db";
     private static MonopolyDatabase instance = null;
 
     public static MonopolyDatabase getInstance(Context context) {

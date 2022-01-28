@@ -3,6 +3,9 @@ package com.example.pmuprojekat.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity
 public class GameEntity {
 
@@ -14,6 +17,7 @@ public class GameEntity {
     private String buyableFieldOwners;
     private String buyableFieldHouses;
     private String buyableFieldMortage;
+    private String startDate;
     private int numOfHousesLeft;
     private int numOfHotelsLeft;
     private int currPlayerNum;
@@ -30,6 +34,9 @@ public class GameEntity {
         this.numOfHotelsLeft = numOfHotelsLeft;
         this.currPlayerNum = currPlayerNum;
         this.rolled = rolled;
+        Date start = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        this.startDate = format.format(start);
     }
 
     public long getId() {
@@ -110,5 +117,13 @@ public class GameEntity {
 
     public void setRolled(boolean rolled) {
         this.rolled = rolled;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
     }
 }
